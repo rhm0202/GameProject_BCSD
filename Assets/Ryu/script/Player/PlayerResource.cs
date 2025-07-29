@@ -60,6 +60,7 @@ public class PlayerResource : ScriptableObject
         return attactDamage;
     }
 
+
     public void TakeDamage(int amount)
     {
         currentHP -= amount;
