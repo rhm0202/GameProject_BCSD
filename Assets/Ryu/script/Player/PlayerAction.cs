@@ -4,19 +4,30 @@ using UnityEditor;
 
 public class PlayerAction : MonoBehaviour
 {
+    //플레이어 정보 모음
+    [SerializeField] private PlayerResource playerResource;
+
     // 플레이어 움직임
-    public float speed = 5f;
-    public float jumpForce = 7f;
+    public float speed;
+    public float jumpForce;
+
+    // 점프를 위한 바닥 체크
     public Transform groundCheck;
     public LayerMask groundLayer;
 
+    // 필요한 인스펙터..?
     private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     private bool isGrounded;
 
+    //플레이어 상태 확인
+    private bool isAttact;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = playerResource.speed;
+        jumpForce = playerResource.jumpForce;
         //sr = GetComponent<SpriteRenderer>();
         //lastPosition = transform.position;
     }
@@ -33,13 +44,13 @@ public class PlayerAction : MonoBehaviour
 
         Jumpping();
 
-        //앉기 관련 로직
-        bool crouching = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        animator.SetBool("IsCrouching", crouching);
+        crouching();
+
+        Attact();
 
     }
 
-
+    // 좌우 움직임
     void Move(float moveInput)
     {
         rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
@@ -56,12 +67,13 @@ public class PlayerAction : MonoBehaviour
         if (moveInput != 0)
         {
             Vector3 scale = transform.localScale;
-            scale.x = moveInput > 0 ? -1 : 1;
+            scale.x = Mathf.Abs(scale.x) * (moveInput > 0 ? -1 : 1);
             transform.localScale = scale;
         }
 
     }
 
+    // 점프
     void Jumpping()
     {
         Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -86,6 +98,23 @@ public class PlayerAction : MonoBehaviour
         }
 
         animator.SetBool("IsJumping", !isGrounded);
+    }
+
+    // 앉기
+    void crouching()
+    {
+        //앉기 관련 로직
+        bool crouching = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        animator.SetBool("IsCrouching", crouching);
+    }
+
+    // 공격
+    void Attact()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && !isAttact)
+        {
+            //PlayerResource.Attact();
+        }
     }
 
 }
