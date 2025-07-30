@@ -5,11 +5,12 @@ using static UnityEngine.Rendering.DebugUI;
 
 [CreateAssetMenu(fileName = "PlayerResourceData", menuName = "Game/PlayerResource")]
 
+//버프 등 플레이 중간에 변경되는 요소를 배제하기 위한 플레이어의 정보, 소울을 통한 영구적 강화시 변경
 
 public class PlayerResource : ScriptableObject
 {
     //플레이어 체력
-    private int maxHP = 50;
+    public int maxHP = 50;
     public int currentHP = 50;
 
     //플레이어 이동속도
@@ -19,7 +20,7 @@ public class PlayerResource : ScriptableObject
     public float jumpForce = 7f;
 
     //플레이어 공격속도
-    public float attactSpeed = 1f;
+    public float attactSpeed = 0.2f;
 
     //플레이어 공격력
     public float attactDamage = 5f;
