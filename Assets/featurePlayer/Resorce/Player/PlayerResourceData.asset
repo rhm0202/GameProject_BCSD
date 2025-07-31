@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 50
   currentHP: 50
+  speed: 5
+  jumpForce: 7
+  attactSpeed: 0.5
+  attactDamage: 5
