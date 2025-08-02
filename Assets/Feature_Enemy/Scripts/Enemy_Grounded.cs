@@ -3,13 +3,35 @@ using UnityEngine;
 public class Enemy_Grounded : Enemy
 {
     private bool isWalking = false;
+    private bool isChasing = false;
 
-    protected override void move()
+    private int direction = 1;
+
+    public override void Move()
     {
         int direction = isFacingRight ? 1 : -1;
         rigid.linearVelocityX = moveSpeed * direction;
 
         isWalking = true;
+    }
+
+    public override void Chase()
+    {
+        Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
+        if (target != null)
+        {
+            isChasing = true;
+
+            if( isFacingRight && target.transform.position.x < transform.position.x)
+            {
+                Flip();
+            }
+            else if (!isFacingRight && target.transform.position.x > transform.position.x)
+            {
+                Flip();
+            }
+        }
+        Move();
     }
 
     bool IsGroundAhead()
@@ -20,9 +42,9 @@ public class Enemy_Grounded : Enemy
         return hit.collider != null;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        move();
+        stateMachine.Update();
         if (!IsGroundAhead())
         {
             Flip();

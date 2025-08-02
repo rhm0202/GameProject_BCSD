@@ -109,7 +109,7 @@ public class PlayerAction : MonoBehaviour
             isGrounded = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             Debug.Log("뛰는 중");
