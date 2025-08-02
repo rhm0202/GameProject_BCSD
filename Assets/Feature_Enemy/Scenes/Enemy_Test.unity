@@ -543,7 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: 
   hp: 0
-  moveSpeed: 0
+  moveSpeed: 2
   detectionRange: 0
   attackRange: 0
   playerLayer:
