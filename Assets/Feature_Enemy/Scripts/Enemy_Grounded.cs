@@ -11,6 +11,7 @@ public class Enemy_Grounded : Enemy
 
         isWalking = true;
     }
+
     bool IsGroundAhead()
     {
         Vector2 frontPoint = new Vector2(rigid.position.x + (isFacingRight ? 0.5f : -0.5f), rigid.position.y);
