@@ -68,7 +68,7 @@ public abstract class Enemy : MonoBehaviour
         return false;
     }
 
-    public virtual void TakeDamage(float damage)    // 적이 데미지를 받았을 때 호출해주세요.
+    protected virtual void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp <= 0)
