@@ -9,6 +9,8 @@ public class PlayerUIManager : MonoBehaviour
 
     public int maxHP;
     public int currentHP;
+    public int coin;
+    public int soul;
 
     public void InitHPUI(int max, int current)
     {

@@ -78,6 +78,7 @@ public class PlayerAction : MonoBehaviour
 
         Attact();
 
+        //데미지 피해 테스트
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10);
