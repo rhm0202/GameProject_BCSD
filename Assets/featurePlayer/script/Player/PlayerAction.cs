@@ -14,6 +14,7 @@ public class PlayerAction : MonoBehaviour
     private PlayerUIManager playerUIManager;
 
     //플레이어 스테이터스 게임 플레이 도중에 받은 버프 or 스킬로 변경 가능함
+
     //플레이어 체력
     public int maxHP;
     public int currentHP;
