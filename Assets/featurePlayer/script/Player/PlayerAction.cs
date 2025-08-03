@@ -1,14 +1,21 @@
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
     //플레이어 정보 모음
-    [SerializeField] private PlayerResource playerResource;
+    [SerializeField]
+    private PlayerResource playerResource;
+
+    //플레이어 UI 조작
+    [SerializeField]
+    private PlayerUIManager playerUIManager;
+
     //플레이어 스테이터스 게임 플레이 도중에 받은 버프 or 스킬로 변경 가능함
     //플레이어 체력
-    private int maxHP;
+    public int maxHP;
     public int currentHP;
 
     //플레이어 이동속도
@@ -46,8 +53,7 @@ public class PlayerAction : MonoBehaviour
         jumpForce = playerResource.jumpForce;
         attactSpeed = playerResource.attactSpeed;
         attactDamage = playerResource.attactDamage;
-        //sr = GetComponent<SpriteRenderer>();
-        //lastPosition = transform.position;
+        playerUIManager.InitHPUI(maxHP, currentHP);
     }
 
     void Update()
@@ -65,6 +71,11 @@ public class PlayerAction : MonoBehaviour
         crouching();
 
         Attact();
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(10);
+        }
 
     }
 
@@ -146,6 +157,25 @@ public class PlayerAction : MonoBehaviour
     {
         yield return new WaitForSeconds(1f / attactSpeed);
         isAttact = false;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHP -= amount;
+        playerUIManager.UpdateHPBar(currentHP);
+
+        if (currentHP < 0) currentHP = 0;
+
+        if (currentHP == 0)
+        {
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+        currentHP = maxHP;
+        SceneManager.LoadScene("GameOver");
     }
 
 }

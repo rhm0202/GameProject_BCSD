@@ -25,9 +25,6 @@ public class PlayerResource : ScriptableObject
     //플레이어 공격력
     public float attactDamage = 5f;
 
-    //플레이어 공격 체크용 함수
-    private bool isAttact;
-
     //체력 초기화
     public void FullHeal()
     {
@@ -61,18 +58,6 @@ public class PlayerResource : ScriptableObject
         return attactDamage;
     }
 
-
-    public void TakeDamage(int amount)
-    {
-        currentHP -= amount;
-        if (currentHP < 0) currentHP = 0;
-
-        if (currentHP == 0)
-        {
-            GameOver();
-        }
-    }
-
     public void Heal(int amount)
     {
         currentHP += amount;
@@ -84,9 +69,5 @@ public class PlayerResource : ScriptableObject
 
     }
 
-    void GameOver()
-    {
-        currentHP = maxHP;
-        SceneManager.LoadScene("GameOver");
-    }
+
 }
