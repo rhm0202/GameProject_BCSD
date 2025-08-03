@@ -120,15 +120,15 @@ MonoBehaviour:
   speed: 5
   jumpForce: 7
   attactSpeed: 0
-  attacksuspendTime: 0.2
-  attackdelayTime: 0
-  attactDamage: 0
+  attacksuspendTime: 0.3
+  attackdelayTime: 0.3
+  attackDamage: 0
   groundCheck: {fileID: 2152086811015084544}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 118455436399019756}
-  attackHitbox: {fileID: 0}
+  attackHitbox: {fileID: 5491819834446446393}
 --- !u!1 &850179655074996073
 GameObject:
   m_ObjectHideFlags: 0
