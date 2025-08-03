@@ -78,6 +78,7 @@ public class PlayerAction : MonoBehaviour
 
         Attact();
 
+        //데미지 피해 테스트
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10);
@@ -185,6 +186,12 @@ public class PlayerAction : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        if (currentHP > maxHP) currentHP = maxHP;
     }
 
     void GameOver()
