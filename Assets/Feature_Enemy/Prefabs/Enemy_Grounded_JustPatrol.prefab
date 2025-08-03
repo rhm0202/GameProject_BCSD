@@ -139,15 +139,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c661f5cbed3388f4fa425e8cbc56ed58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  hp: 0
-  moveSpeed: 2
-  detectionRange: 0
+  enemyName: Salamander
+  hp: 20
+  moveSpeed: 1
+  detectionRange: 2.5
   attackRange: 0
-  playerLayer:
+  playerMask:
     serializedVersion: 2
     m_Bits: 128
   deadDelay: 1
+  isChasingPlayer: 1
+  player: {fileID: 0}
 --- !u!70 &6310968107311102143
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

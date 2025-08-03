@@ -22,6 +22,7 @@ public abstract class Enemy : MonoBehaviour
     protected Rigidbody2D rigid;
     public PlayerAction player;
 
+    // Enemy 상태머신
     public EnemySM stateMachine;
 
     public abstract void Move();
@@ -32,8 +33,6 @@ public abstract class Enemy : MonoBehaviour
         animator = GetComponent<SkeletonAnimation>();
         rigid = GetComponent<Rigidbody2D>();
         stateMachine = new EnemySM(this);
-
-        ChangeAnimation("Idle");
     }
 
     protected void Flip()
@@ -68,7 +67,7 @@ public abstract class Enemy : MonoBehaviour
         return false;
     }
 
-    protected virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         hp -= damage;
         if (hp <= 0)
