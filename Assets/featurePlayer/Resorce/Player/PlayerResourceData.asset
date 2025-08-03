@@ -16,5 +16,5 @@ MonoBehaviour:
   currentHP: 50
   speed: 5
   jumpForce: 7
-  attactSpeed: 0.5
+  attactSpeed: 1
   attactDamage: 5

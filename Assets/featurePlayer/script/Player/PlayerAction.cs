@@ -19,6 +19,8 @@ public class PlayerAction : MonoBehaviour
 
     //플레이어 공격속도
     public float attactSpeed;
+    [SerializeField] private float attacksuspendTime = 0.2f; // 공격 유지 시간
+    [SerializeField] private float attackdelayTime;          // 공격 선 딜레이 시간
 
     //플레이어 공격력
     public float attactDamage;
@@ -36,6 +38,9 @@ public class PlayerAction : MonoBehaviour
     private bool isAttact = false;
     private float lastAttackTime = 0f;
     private bool isCrouching = false;
+
+    // 플레이어 공격 판정 히트박스 오브젝트
+    [SerializeField] private GameObject attackHitbox;
 
     void Start()
     {
@@ -109,7 +114,7 @@ public class PlayerAction : MonoBehaviour
             isGrounded = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             Debug.Log("뛰는 중");
@@ -138,10 +143,19 @@ public class PlayerAction : MonoBehaviour
             playerResource.Attact();
             animator.SetTrigger("IsAttact");
             isAttact = true;
+            Invoke("EnableHitbox", attackdelayTime);
             StartCoroutine(AttackCooldownCoroutine());
         }
     }
-
+    private void EnableHitbox()
+    {
+        attackHitbox.SetActive(true);
+        Invoke("DisableHitbox", attacksuspendTime);
+    }
+    private void DisableHitbox()
+    {
+        attackHitbox.SetActive(false);
+    }
     IEnumerator AttackCooldownCoroutine()
     {
         yield return new WaitForSeconds(1f / attactSpeed);
