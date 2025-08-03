@@ -188,6 +188,12 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        if (currentHP > maxHP) currentHP = maxHP;
+    }
+
     void GameOver()
     {
         currentHP = maxHP;

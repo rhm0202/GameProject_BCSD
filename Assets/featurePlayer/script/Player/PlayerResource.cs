@@ -58,16 +58,6 @@ public class PlayerResource : ScriptableObject
         return attactDamage;
     }
 
-    public void Heal(int amount)
-    {
-        currentHP += amount;
-        if (currentHP > maxHP) currentHP = maxHP;
-    }
-
-    public void Attact()
-    {
-
-    }
 
 
 }
