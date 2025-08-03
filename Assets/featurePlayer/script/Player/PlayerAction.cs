@@ -31,7 +31,7 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] private float attackdelayTime;          // 공격 선 딜레이 시간
 
     //플레이어 공격력
-    public float attactDamage;
+    public float attackDamage;
 
     // 점프를 위한 바닥 체크
     public Transform groundCheck;
@@ -58,7 +58,7 @@ public class PlayerAction : MonoBehaviour
         speed = playerResource.speed;
         jumpForce = playerResource.jumpForce;
         attactSpeed = playerResource.attactSpeed;
-        attactDamage = playerResource.attactDamage;
+        attackDamage = playerResource.attactDamage;
         playerUIManager.InitHPUI(maxHP, currentHP);
     }
 
