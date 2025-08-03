@@ -1,47 +1,30 @@
 using UnityEngine;
 using UnityEngine.UI; // UI 컴포넌트 사용
+using TMPro;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    public int maxHP = 100;
-    public int currentHP = 100;
-
     public Slider hpBar; // Inspector에서 연결할 HP 바
+    public TMP_Text hpText;
 
-    void Start()
+    public int maxHP;
+    public int currentHP;
+
+    public void InitHPUI(int max, int current)
     {
-        // 시작할 때 최대 체력으로 바 세팅
-        if (hpBar != null)
-        {
-            hpBar.maxValue = maxHP;
-            hpBar.value = currentHP;
-        }
+        maxHP = max;
+        currentHP = current;
+
+        hpBar.maxValue = max;
+        hpBar.value = current;
+
+        hpText.text = $"{current} / {max}";
     }
 
-    void Update()
+    public void UpdateHPBar(int currentHP)
     {
-        // 예시) H 키로 데미지 입히기 (테스트)
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(10);
-        }
-    }
-
-    public void TakeDamage(int amount)
-    {
-        currentHP -= amount;
-        if (currentHP < 0) currentHP = 0;
-
-        if (hpBar != null)
-            hpBar.value = currentHP;
-    }
-
-    public void Heal(int amount)
-    {
-        currentHP += amount;
-        if (currentHP > maxHP) currentHP = maxHP;
-
-        if (hpBar != null)
-            hpBar.value = currentHP;
+        this.currentHP = currentHP;
+        hpBar.value = currentHP;
+        hpText.text = $"{currentHP} / {maxHP}";
     }
 }
