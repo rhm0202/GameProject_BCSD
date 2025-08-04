@@ -43,9 +43,10 @@ public class PlayerAction : MonoBehaviour
     private bool isGrounded;
 
     //플레이어 상태 확인
-    private bool isAttact = false;
+    private bool isAttack = false;
     private float lastAttackTime = 0f;
     private bool isCrouching = false;
+    private bool isKnockbacking = false;    // 넉백 중인지 확인(넉백 중에는 다른 힘을 받지 않도록)
 
     // 플레이어 공격 판정 히트박스 오브젝트
     [SerializeField] private GameObject attackHitbox;
@@ -57,8 +58,8 @@ public class PlayerAction : MonoBehaviour
         currentHP = playerResource.currentHP;
         speed = playerResource.speed;
         jumpForce = playerResource.jumpForce;
-        attactSpeed = playerResource.attactSpeed;
-        attackDamage = playerResource.attactDamage;
+        attactSpeed = playerResource.attackSpeed;
+        attackDamage = playerResource.attackDamage;
         playerUIManager.InitHPUI(maxHP, currentHP);
     }
 
@@ -70,18 +71,21 @@ public class PlayerAction : MonoBehaviour
 
         float moveInput = Input.GetAxisRaw("Horizontal");
 
-        Move(moveInput);
+        if (!isKnockbacking)
+        {
+            Move(moveInput);
 
-        Jumpping();
+            Jumpping();
 
-        crouching();
+            crouching();
 
-        Attact();
+            Attack();
+        }
 
         //데미지 피해 테스트
         if (Input.GetKeyDown(KeyCode.H))
         {
-            TakeDamage(10);
+            TakeDamage(10, Vector2.zero);
         }
 
     }
@@ -149,12 +153,12 @@ public class PlayerAction : MonoBehaviour
     }
 
     // 공격
-    void Attact()
+    void Attack()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && !isAttact)
+        if (Input.GetKey(KeyCode.LeftControl) && !isAttack)
         {
             animator.SetTrigger("IsAttact");
-            isAttact = true;
+            isAttack = true;
             Invoke("EnableHitbox", attackdelayTime);
             StartCoroutine(AttackCooldownCoroutine());
         }
@@ -171,10 +175,19 @@ public class PlayerAction : MonoBehaviour
     IEnumerator AttackCooldownCoroutine()
     {
         yield return new WaitForSeconds(1f / attactSpeed);
-        isAttact = false;
+        isAttack = false;
     }
 
-    public void TakeDamage(int amount)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("enemys"))
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            TakeDamage(10, collision.transform.position); // 예시로 10의 데미지를 받음
+        }
+    }
+
+    public void TakeDamage(int amount, Vector2 targetPos)
     {
         currentHP -= amount;
         playerUIManager.UpdateHPBar(currentHP);
@@ -185,6 +198,22 @@ public class PlayerAction : MonoBehaviour
         {
             GameOver();
         }
+        else
+        {
+            Debug.Log($"Player took {amount} damage. Current HP: {currentHP}");
+            int direction = (transform.position.x < targetPos.x) ? 1 : -1;
+            Knockback(direction);
+        }
+    }
+    private void Knockback(int direction)
+    {
+        isKnockbacking = true;
+        rb.AddForce(new Vector2(direction * 25, 7), ForceMode2D.Impulse);
+        Invoke("ResetKnockback", 0.3f);
+    }
+    private void ResetKnockback()
+    {
+        isKnockbacking = false;
     }
 
     public void Heal(int amount)

@@ -20,10 +20,10 @@ public class PlayerResource : ScriptableObject
     public float jumpForce = 7f;
 
     //플레이어 공격속도
-    public float attactSpeed = 0.2f;
+    public float attackSpeed = 0.2f;
 
     //플레이어 공격력
-    public float attactDamage = 5f;
+    public float attackDamage = 5f;
 
     //체력 초기화
     public void FullHeal()
@@ -47,15 +47,15 @@ public class PlayerResource : ScriptableObject
         jumpForce += value;
         return jumpForce;
     }
-    public float UpAttactSpeed(int value)
+    public float UpAttackSpeed(int value)
     {
-        attactSpeed += value;
-        return attactSpeed;
+        attackSpeed += value;
+        return attackSpeed;
     }
-    public float UpAttactDamage(int value)
+    public float UpAttackDamage(int value)
     {
-        attactDamage += value;
-        return attactDamage;
+        attackDamage += value;
+        return attackDamage;
     }
 
 
