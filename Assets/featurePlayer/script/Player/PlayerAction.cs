@@ -153,7 +153,6 @@ public class PlayerAction : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl) && !isAttact)
         {
-            playerResource.Attact();
             animator.SetTrigger("IsAttact");
             isAttact = true;
             Invoke("EnableHitbox", attackdelayTime);
