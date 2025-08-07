@@ -4,13 +4,19 @@ using TMPro;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    public Slider hpBar; // Inspector에서 연결할 HP 바
-    public TMP_Text hpText;
+    [SerializeField]
+    private Slider hpBar; // Inspector에서 연결할 HP 바
+    [SerializeField]
+    private TMP_Text hpText;
+    [SerializeField]
+    private Canvas settingUI;
 
     public int maxHP;
     public int currentHP;
     public int coin;
     public int soul;
+
+    private bool settingUIIsActive = false;
 
     public void InitHPUI(int max, int current)
     {
@@ -28,5 +34,20 @@ public class PlayerUIManager : MonoBehaviour
         this.currentHP = currentHP;
         hpBar.value = currentHP;
         hpText.text = $"{currentHP} / {maxHP}";
+    }
+
+    public void activateSettingUI()
+    {
+        if(!settingUIIsActive)
+        {
+            settingUIIsActive = true;
+            settingUI.gameObject.SetActive(settingUIIsActive);
+        }
+        else
+        {
+            settingUI.gameObject.SetActive(!settingUIIsActive);
+            settingUIIsActive = false;
+        }
+        
     }
 }
