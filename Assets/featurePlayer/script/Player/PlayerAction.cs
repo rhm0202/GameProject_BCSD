@@ -69,6 +69,11 @@ public class PlayerAction : MonoBehaviour
 
         //TrackIdleTime(stateInfo);
 
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            playerUIManager.activateSettingUI();
+        }
+
+
         float moveInput = Input.GetAxisRaw("Horizontal");
 
         if (!isKnockbacking)
@@ -81,6 +86,7 @@ public class PlayerAction : MonoBehaviour
 
             Attack();
         }
+
 
         //데미지 피해 테스트
         if (Input.GetKeyDown(KeyCode.H))
