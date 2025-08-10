@@ -41,12 +41,14 @@ public class PlayerUIManager : MonoBehaviour
         if(!settingUIIsActive)
         {
             settingUIIsActive = true;
+            Time.timeScale = 0f;
             settingUI.gameObject.SetActive(settingUIIsActive);
         }
         else
         {
-            settingUI.gameObject.SetActive(!settingUIIsActive);
             settingUIIsActive = false;
+            Time.timeScale = 1f;
+            settingUI.gameObject.SetActive(settingUIIsActive);
         }
         
     }
