@@ -10,6 +10,8 @@ public class PlayerUIManager : MonoBehaviour
     private TMP_Text hpText;
     [SerializeField]
     private Canvas settingUI;
+    [SerializeField]
+    public GameObject pauseMenuUI;
 
     public int maxHP;
     public int currentHP;
@@ -42,13 +44,17 @@ public class PlayerUIManager : MonoBehaviour
         {
             settingUIIsActive = true;
             Time.timeScale = 0f;
+            pauseMenuUI.SetActive(settingUIIsActive);
             settingUI.gameObject.SetActive(settingUIIsActive);
+            
         }
         else
         {
             settingUIIsActive = false;
             Time.timeScale = 1f;
+            pauseMenuUI.SetActive(settingUIIsActive);
             settingUI.gameObject.SetActive(settingUIIsActive);
+            
         }
         
     }

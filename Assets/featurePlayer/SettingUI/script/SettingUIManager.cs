@@ -1,20 +1,34 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SettingUIManager : MonoBehaviour
 {
-    public GameObject pauseMenuUI; 
+    [SerializeField]
+    private Canvas settingUI;
+    [SerializeField]
+    public GameObject pauseMenuUI;
+    [SerializeField]
+    public GameObject settingMenuUI;
 
     public void OnClickResume()
     {
         pauseMenuUI.SetActive(false);
+        settingUI.gameObject.SetActive(false);
         Time.timeScale = 1f; // 게임 재개
     }
 
     public void OnClickSetting()
     {
-        Debug.Log("설정창 열기 (직접 구현 필요)");
-        // 예: settingUI.SetActive(true);
+        pauseMenuUI.SetActive(false);
+        settingMenuUI.SetActive(true);
+    }
+
+    public void OnClickSettingClose ()
+    {
+        settingMenuUI.SetActive(false);
+        settingUI.gameObject.SetActive(false);
+        Time.timeScale = 1f; // 게임 재개
     }
 
     public void OnClickToTitle()
