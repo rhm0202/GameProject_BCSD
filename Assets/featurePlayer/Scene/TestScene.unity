@@ -547,6 +547,34 @@ PrefabInstance:
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1350283771}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickSettingClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingUIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715414001393348330, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7715414001393348333, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -21.400024
@@ -559,7 +587,8 @@ PrefabInstance:
     - {fileID: 2483414459521206205, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
     - {fileID: 7715414002432645422, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
     - {fileID: 7715414002567125720, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7715414003406875930, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e0b2eed596126498d96bf88aae9790, type: 3}
@@ -1740,7 +1769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &723970703
 RectTransform:
   m_ObjectHideFlags: 0
