@@ -8,7 +8,7 @@ public class ChangeScene : MonoBehaviour
 {
 
     public GameObject player;
-
+    
 
     void OnTriggerEnter2D(Collider2D collision)
     {
