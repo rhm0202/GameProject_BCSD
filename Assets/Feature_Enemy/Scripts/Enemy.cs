@@ -20,7 +20,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected SkeletonAnimation animator;
     protected Rigidbody2D rigid;
-    public PlayerAction player;
+    [HideInInspector] public PlayerAction player;
 
     // Enemy 상태머신
     public EnemySM stateMachine;
