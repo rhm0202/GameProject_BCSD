@@ -8,13 +8,15 @@ public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] protected string enemyName;
     [SerializeField] protected float hp;
-    [SerializeField] protected float moveSpeed;
     [SerializeField] protected float detectionRange;
     [SerializeField] protected float attackRange;
     [SerializeField] protected int enemyDamage;
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] private float deadDelay = 1f;
+    [SerializeField] private GameObject soulPrefab; // 소울 프리팹
     [SerializeField] protected int soulsDrop;   // 적 처치 시 드랍되는 소울의 양
+
+    public float applyedSpeed;
 
     public bool isChasingPlayer = false;
 
@@ -69,9 +71,17 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Dead()
     {
-        // 적이 사망 시 소울 드랍 구현 필요
         Debug.Log($"{enemyName}이(가) 죽었습니다. 드랍되는 소울: {soulsDrop}");
+        stateMachine.TransitionTo(stateMachine.stateDead);
         Destroy(gameObject, deadDelay);
-        ChangeAnimation("Dead");
+        DropSoul();     // 처치시 소울 드랍
+    }
+
+    private void DropSoul()
+    {
+        for (int i = 0; i < soulsDrop; i++)
+        {
+            GameObject soul = Instantiate(soulPrefab, transform.position, Quaternion.identity);
+        }
     }
 }

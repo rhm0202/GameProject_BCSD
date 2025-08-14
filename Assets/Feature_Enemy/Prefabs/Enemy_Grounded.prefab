@@ -144,12 +144,16 @@ MonoBehaviour:
   moveSpeed: 1
   detectionRange: 2.5
   attackRange: 0
+  enemyDamage: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 128
   deadDelay: 2
+  soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
+  soulsDrop: 5
   isChasingPlayer: 1
   player: {fileID: 0}
+  chasingSpeed: 2
 --- !u!70 &6310968107311102143
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

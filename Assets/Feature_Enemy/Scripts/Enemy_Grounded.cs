@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class Enemy_Grounded : Enemy
 {
-    private bool isWalking = false;
 
     private int direction = 1;
-    [SerializeField] private float chasingSpeed = 2f; 
-    private float applyedSpeed = 0f;
+    [SerializeField] private float chasingSpeed = 2f;
+    [SerializeField] protected float patrolSpeed = 1f;
 
 
     public override void Move()
@@ -14,7 +13,6 @@ public class Enemy_Grounded : Enemy
         direction = isFacingRight ? 1 : -1;
         rigid.linearVelocityX = applyedSpeed * direction;
 
-        isWalking = true;
     }
 
     public override bool DetectPlayer()
@@ -58,7 +56,7 @@ public class Enemy_Grounded : Enemy
 
     public override void Patrol()
     {
-        applyedSpeed = moveSpeed;
+        applyedSpeed = patrolSpeed;
         if (!IsGroundAhead())
         {
             Flip();
@@ -68,7 +66,7 @@ public class Enemy_Grounded : Enemy
     private bool IsGroundAhead()
     {
         Vector2 frontPoint = new Vector2(rigid.position.x + (isFacingRight ? 0.5f : -0.5f), rigid.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(frontPoint, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(frontPoint, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
         return hit.collider != null;
     }
