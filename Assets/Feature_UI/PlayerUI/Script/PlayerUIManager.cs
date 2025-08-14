@@ -18,7 +18,7 @@ public class PlayerUIManager : MonoBehaviour
     public int coin;
     public int soul;
 
-    private bool settingUIIsActive = false;
+    public bool settingUIIsActive = false;
 
     public void InitHPUI(int max, int current)
     {
@@ -46,15 +46,13 @@ public class PlayerUIManager : MonoBehaviour
             Time.timeScale = 0f;
             pauseMenuUI.SetActive(settingUIIsActive);
             settingUI.gameObject.SetActive(settingUIIsActive);
-            
         }
         else
         {
             settingUIIsActive = false;
             Time.timeScale = 1f;
             pauseMenuUI.SetActive(settingUIIsActive);
-            settingUI.gameObject.SetActive(settingUIIsActive);
-            
+            settingUI.gameObject.SetActive(settingUIIsActive);      
         }
         
     }

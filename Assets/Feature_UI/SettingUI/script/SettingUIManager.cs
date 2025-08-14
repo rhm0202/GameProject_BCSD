@@ -5,16 +5,19 @@ using UnityEngine.SceneManagement;
 public class SettingUIManager : MonoBehaviour
 {
     [SerializeField]
-    private Canvas settingUI;
+    private Canvas settingUICanvas;
     [SerializeField]
-    public GameObject pauseMenuUI;
+    private GameObject pauseMenuUI;
     [SerializeField]
-    public GameObject settingMenuUI;
+    private GameObject settingMenuUI;
+    [SerializeField]
+    private PlayerUIManager playerUI;
 
     public void OnClickResume()
     {
+        playerUI.settingUIIsActive = false;
         pauseMenuUI.SetActive(false);
-        settingUI.gameObject.SetActive(false);
+        settingUICanvas.gameObject.SetActive(false);
         Time.timeScale = 1f; // 게임 재개
     }
 
@@ -26,8 +29,9 @@ public class SettingUIManager : MonoBehaviour
 
     public void OnClickSettingClose ()
     {
+        playerUI.settingUIIsActive = false;
         settingMenuUI.SetActive(false);
-        settingUI.gameObject.SetActive(false);
+        settingUICanvas.gameObject.SetActive(false);
         Time.timeScale = 1f; // 게임 재개
     }
 
