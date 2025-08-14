@@ -478,10 +478,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_1_Salamander
       objectReference: {fileID: 0}
-    - target: {fileID: 1603736403573982400, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
-      propertyPath: m_TagString
-      value: enemys
-      objectReference: {fileID: 0}
     - target: {fileID: 2618915221983896905, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -528,31 +524,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
       propertyPath: hp
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 888007190}
     - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
-      propertyPath: enemyName
-      value: Salamander
-      objectReference: {fileID: 0}
-    - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
-      propertyPath: moveSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
-      propertyPath: detectionRange
-      value: 2.5
+      propertyPath: soulsDrop
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
       propertyPath: isChasingPlayer
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8201236523799221471, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
-      propertyPath: playerMask.m_Bits
-      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -2,17 +2,34 @@ using UnityEngine;
 
 public class Enemy_Grounded : Enemy
 {
-    private bool isWalking = false;
-    private bool isChasing = false;
 
     private int direction = 1;
+    [SerializeField] private float chasingSpeed = 2f;
+    [SerializeField] protected float patrolSpeed = 1f;
+
 
     public override void Move()
     {
-        int direction = isFacingRight ? 1 : -1;
-        rigid.linearVelocityX = moveSpeed * direction;
+        direction = isFacingRight ? 1 : -1;
+        rigid.linearVelocityX = applyedSpeed * direction;
 
-        isWalking = true;
+    }
+
+    public override bool DetectPlayer()
+    {
+        Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
+
+        if (target != null)
+        {
+            Vector2 dirToPlayer = target.transform.position - transform.position;
+            if ((dirToPlayer.x > 0 && isFacingRight) || (dirToPlayer.x < 0 && !isFacingRight))
+            {
+                player = target.GetComponent<PlayerAction>();
+                Debug.Log("플레이어가 적의 시야 범위 내에 있습니다.");
+                return true;
+            }
+        }
+        return false;
     }
 
     public override void Chase()
@@ -20,9 +37,9 @@ public class Enemy_Grounded : Enemy
         Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
         if (target != null)
         {
-            isChasing = true;
+            applyedSpeed = chasingSpeed;
 
-            if( isFacingRight && target.transform.position.x < transform.position.x)
+            if ( isFacingRight && target.transform.position.x < transform.position.x)
             {
                 Flip();
             }
@@ -31,13 +48,25 @@ public class Enemy_Grounded : Enemy
                 Flip();
             }
         }
-        Move();
+        else
+        {
+            isChasingPlayer = false;
+        }
     }
 
-    bool IsGroundAhead()
+    public override void Patrol()
+    {
+        applyedSpeed = patrolSpeed;
+        if (!IsGroundAhead())
+        {
+            Flip();
+        }
+    }
+
+    private bool IsGroundAhead()
     {
         Vector2 frontPoint = new Vector2(rigid.position.x + (isFacingRight ? 0.5f : -0.5f), rigid.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(frontPoint, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(frontPoint, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
         return hit.collider != null;
     }
@@ -45,9 +74,10 @@ public class Enemy_Grounded : Enemy
     void Update()
     {
         stateMachine.Update();
-        if (!IsGroundAhead())
-        {
-            Flip();
-        }
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 }
