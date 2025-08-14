@@ -11,12 +11,14 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float detectionRange;
     [SerializeField] protected float attackRange;
+    [SerializeField] protected int enemyDamage;
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] private float deadDelay = 1f;
+    [SerializeField] protected int soulsDrop;   // 적 처치 시 드랍되는 소울의 양
 
     public bool isChasingPlayer = false;
 
-    protected bool isFacingRight = true;    // 적이 바라보는 방향(적이 플레이어를 바라보는지 판단할 때 사용 ?)
+    protected bool isFacingRight = true;    // 적이 바라보는 방향(적이 플레이어를 바라보는지 판단할 때 사용)
 
     protected SkeletonAnimation animator;
     protected Rigidbody2D rigid;
@@ -27,6 +29,8 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract void Move();
     public abstract void Chase();
+    public abstract void Patrol();
+    public abstract bool DetectPlayer();
 
     protected virtual void Awake()
     {
@@ -49,23 +53,11 @@ public abstract class Enemy : MonoBehaviour
 
         animator.AnimationState.SetAnimation(0, animationName, loop);
     }
-
-    public bool DetectPlayer()
+    public void ChangeAnimationSpeed(float speed)
     {
-        Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
-
-        if (target != null)
-        {
-            Vector2 dirToPlayer = target.transform.position - transform.position;
-            if ((dirToPlayer.x > 0 && isFacingRight) || (dirToPlayer.x < 0 && !isFacingRight))
-            {
-                player = target.GetComponent<PlayerAction>();
-                Debug.Log("플레이어가 적의 시야 범위 내에 있습니다.");
-                return true;
-            }
-        }
-        return false;
+        animator.timeScale = speed;
     }
+
 
     public virtual void TakeDamage(float damage)
     {
@@ -77,6 +69,8 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Dead()
     {
+        // 적이 사망 시 소울 드랍 구현 필요
+        Debug.Log($"{enemyName}이(가) 죽었습니다. 드랍되는 소울: {soulsDrop}");
         Destroy(gameObject, deadDelay);
         ChangeAnimation("Dead");
     }
