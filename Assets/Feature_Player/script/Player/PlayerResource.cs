@@ -9,9 +9,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerResource : ScriptableObject
 {
-    //플레이어 체력
+    //플레이어 최대체력
     public int maxHP = 50;
-    public int currentHP = 50;
 
     //플레이어 이동속도
     public float speed = 5f;
@@ -25,34 +24,28 @@ public class PlayerResource : ScriptableObject
     //플레이어 공격력
     public float attackDamage = 5f;
 
-    //체력 초기화
-    public void FullHeal()
-    {
-        currentHP = maxHP;
-    }
-
     //플레이어 스텟을 올리는 함수
     public int UpMaxHp(int value)
     {
         maxHP += value;
         return maxHP;
     }
-    public float UpSpeed(int value)
+    public float UpSpeed(float value)
     {
         speed += value;
         return speed;
     }
-    public float UpJumpForce(int value)
+    public float UpJumpForce(float value)
     {
         jumpForce += value;
         return jumpForce;
     }
-    public float UpAttackSpeed(int value)
+    public float UpAttackSpeed(float value)
     {
         attackSpeed += value;
         return attackSpeed;
     }
-    public float UpAttackDamage(int value)
+    public float UpAttackDamage(float value)
     {
         attackDamage += value;
         return attackDamage;

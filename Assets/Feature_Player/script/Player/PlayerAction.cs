@@ -55,7 +55,7 @@ public class PlayerAction : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         maxHP = playerResource.maxHP;
-        currentHP = playerResource.currentHP;
+        currentHP = maxHP;
         speed = playerResource.speed;
         jumpForce = playerResource.jumpForce;
         attactSpeed = playerResource.attackSpeed;

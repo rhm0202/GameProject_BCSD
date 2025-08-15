@@ -89,7 +89,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 10
+  m_GravityScale: 9.8
   m_Material: {fileID: 6200000, guid: e5681f1fa33e63d4f842208a51eb7acb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -115,11 +115,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerResource: {fileID: 11400000, guid: a2b2d312a20a52d49be98ce946747a08, type: 2}
   playerUIManager: {fileID: 0}
-  maxHP: 0
-  currentHP: 0
-  speed: 5
-  jumpForce: 24
-  attactSpeed: 0
+  maxHP: 5
+  currentHP: 5
+  speed: 13
+  jumpForce: 35
+  attactSpeed: 1
   attacksuspendTime: 0.3
   attackdelayTime: 0.3
   attackDamage: 0
