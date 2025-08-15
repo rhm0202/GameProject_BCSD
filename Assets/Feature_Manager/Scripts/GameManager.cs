@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     private int soul = 0;
-    public int Soul
+    public int Soul     // 외부에서 소울을 참조할 때 사용해주세요.
     {
         get { return soul; }
         set

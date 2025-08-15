@@ -9,7 +9,7 @@ public interface IState
 
 public class EnemySM
 {
-    public IState CurrentState { get; private set; }
+    public IState CurrentState { get; protected set; }
 
     public Enemy_StateIdle stateIdle;
     public Enemy_StateChasing stateChasing;

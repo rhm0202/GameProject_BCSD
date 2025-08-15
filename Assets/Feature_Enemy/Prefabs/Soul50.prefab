@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3449490010022431447}
   - component: {fileID: 3666912892409518432}
   - component: {fileID: -6779521139966645139}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Soul50
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,5 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad36cec49102784586b284f202b55d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 1
   minForce: 5
   maxForce: 9
