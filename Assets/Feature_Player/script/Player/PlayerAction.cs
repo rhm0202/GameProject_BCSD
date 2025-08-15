@@ -156,7 +156,7 @@ public class PlayerAction : MonoBehaviour
     // 공격
     void Attack()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && !isAttack)
+        if (Input.GetMouseButtonDown(0) && !isAttack)
         {
             animator.SetTrigger("IsAttact");
             isAttack = true;

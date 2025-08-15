@@ -13280,6 +13280,10 @@ PrefabInstance:
       propertyPath: soulUICanvas
       value: 
       objectReference: {fileID: 1852162842}
+    - target: {fileID: 2779723042603448685, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
+      propertyPath: checkPointUICanvas
+      value: 
+      objectReference: {fileID: 1852162842}
     - target: {fileID: 2882455821910948585, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_IsActive
       value: 1

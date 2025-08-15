@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private PlayerUIManager playerUIManager;
 
     private int soul = 0;
+
     public int Soul
     {
         get { return soul; }
