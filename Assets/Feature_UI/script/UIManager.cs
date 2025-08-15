@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SettingUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private Canvas settingUICanvas;
@@ -10,9 +10,16 @@ public class SettingUIManager : MonoBehaviour
     private GameObject pauseMenuUI;
     [SerializeField]
     private GameObject settingMenuUI;
+
     [SerializeField]
     private PlayerUIManager playerUI;
 
+    [SerializeField]
+    private Canvas soulUICanvas;
+    [SerializeField]
+    private GameObject soulMenuUI;
+
+    //SettingUI에서 사용
     public void OnClickResume()
     {
         playerUI.settingUIIsActive = false;
@@ -29,10 +36,13 @@ public class SettingUIManager : MonoBehaviour
 
     public void OnClickSettingClose ()
     {
-        playerUI.settingUIIsActive = false;
         settingMenuUI.SetActive(false);
-        settingUICanvas.gameObject.SetActive(false);
-        Time.timeScale = 1f; // 게임 재개
+        pauseMenuUI.SetActive(true);
+    }
+
+    public void OnClickToCheckPoint()
+    {
+        Debug.Log("체크 포인트로 이동합니다.");
     }
 
     public void OnClickToTitle()
@@ -43,6 +53,7 @@ public class SettingUIManager : MonoBehaviour
 
     public void OnClickExitGame()
     {
+        Debug.Log("게임을 종료합니다.");
         Application.Quit();
     }
 }
