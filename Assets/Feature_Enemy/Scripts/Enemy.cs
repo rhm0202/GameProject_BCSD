@@ -52,7 +52,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void ChangeAnimation(string animationName) //Names are: Idle, Walk, Dead and Attack
     {
-        bool loop = (animationName != "Dead");
+        bool loop = (animationName != "Dead" && animationName != "Attack");
 
         animator.AnimationState.SetAnimation(0, animationName, loop);
     }

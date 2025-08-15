@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class Boss1_StateNAttack : IState
+public class Boss1_StateJAttack : IState
 {
     private Boss_Stage1 boss1;
 
-
-    public Boss1_StateNAttack(Boss_Stage1 boss)
+    public Boss1_StateJAttack(Boss_Stage1 boss)
     {
         this.boss1 = boss;
     }
@@ -17,11 +16,12 @@ public class Boss1_StateNAttack : IState
     }
     public void Update()
     {
-        boss1.NormalAttack();
+
     }
 
     public void Exit()
     {
         boss1.isAttacking = false;
+        boss1.ChangeAnimation("Idle");
     }
 }

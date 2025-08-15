@@ -5,7 +5,7 @@ public class Enemy_Grounded : Enemy
 
     private int direction = 1;
     [SerializeField] private float chasingSpeed = 2f;
-    [SerializeField] protected float patrolSpeed = 1f;
+    [SerializeField] private float patrolSpeed = 1f;
 
 
     public override void Move()

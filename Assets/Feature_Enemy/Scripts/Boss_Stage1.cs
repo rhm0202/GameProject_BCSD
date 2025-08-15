@@ -4,19 +4,26 @@ using static UnityEngine.GraphicsBuffer;
 
 
 // 스테이지 1의 보스
-// 플레이어를 쫒아다니며 일정 시간마다 통상 공격
-// 점프 공격
+// 배회하며 일정 시간마다 통상 공격
+// 플레이어의 위치로 점프 공격
 public class Boss_Stage1 : Enemy
 {
     private int direction = 1;
-    new Boss1SM stateMachine;
+    public new Boss1SM stateMachine;
 
     [SerializeField] private float chasingSpeed = 5f;
-    [SerializeField] protected float patrolSpeed = 1f;
+    [SerializeField] private float patrolSpeed = 5f;
 
     [SerializeField] private GameObject attackHitbox;
 
     [HideInInspector] public bool isAttacking = false;
+
+    public void StartBossFight()
+    {
+        player = FindAnyObjectByType<PlayerAction>().GetComponent<PlayerAction>();
+        isFacingRight = false;
+        applyedSpeed = patrolSpeed;
+    }
 
     public override void Chase()
     {
@@ -25,7 +32,6 @@ public class Boss_Stage1 : Enemy
             return;
         }
 
-        applyedSpeed = chasingSpeed;
         if (isFacingRight && player.transform.position.x < transform.position.x)
         {
             Flip();
@@ -41,7 +47,6 @@ public class Boss_Stage1 : Enemy
         Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
         if(target != null)
         {
-            player = target.GetComponent<PlayerAction>();
             return true;
         }
         return false;
@@ -56,7 +61,7 @@ public class Boss_Stage1 : Enemy
 
     public override void Patrol()
     {
-        throw new System.NotImplementedException();
+        applyedSpeed = patrolSpeed;
     }
 
     protected override void Awake()
@@ -67,16 +72,16 @@ public class Boss_Stage1 : Enemy
 
     public void NormalAttack()
     {
-        stateMachine.TransitionTo(stateMachine.stateNAttack);
         StartCoroutine(NAttackCoroutine());
     }
 
     private IEnumerator NAttackCoroutine()
     {
-        yield return new WaitForSeconds(1f); // 공격 딜레이
+        yield return new WaitForSeconds(0.75f); // 공격 딜레이
         attackHitbox.SetActive(true);
-        yield return new WaitForSeconds(1f); // 공격 후 딜레이
+        yield return new WaitForSeconds(0.6f); // 공격 후 딜레이
         attackHitbox.SetActive(false);
+        stateMachine.TransitionTo(stateMachine.stateChasing);
     }
 
     private void Update()
@@ -86,6 +91,9 @@ public class Boss_Stage1 : Enemy
 
     private void FixedUpdate()
     {
-        Move();
+        if (!isAttacking)
+        {
+            Move();
+        }
     }
 }
