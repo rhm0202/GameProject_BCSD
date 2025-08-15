@@ -4,6 +4,12 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    //플레이어 UI 조작
+    [SerializeField]
+    private PlayerUIManager playerUIManager;
+
+    private bool isCheckPoint = false;
+
     private int soul = 0;
     public int Soul
     {
@@ -48,6 +54,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            playerUIManager.activateSettingUI();
         }
     }
 }

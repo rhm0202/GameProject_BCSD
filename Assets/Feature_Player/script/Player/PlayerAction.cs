@@ -69,11 +69,6 @@ public class PlayerAction : MonoBehaviour
 
         //TrackIdleTime(stateInfo);
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            playerUIManager.activateSettingUI();
-        }
-
-
         float moveInput = Input.GetAxisRaw("Horizontal");
 
         if (!isKnockbacking)
