@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: PlayerResourceData
   m_EditorClassIdentifier: 
   maxHP: 50
-  currentHP: 50
   speed: 12
   jumpForce: 35
   attackSpeed: 1
