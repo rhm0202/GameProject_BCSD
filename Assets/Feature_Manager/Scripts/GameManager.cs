@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerUIManager playerUIManager;
 
-    private bool isCheckPoint = false;
-
     private int soul = 0;
     public int Soul
     {
