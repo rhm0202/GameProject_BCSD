@@ -4,9 +4,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-    //플레이어 UI 조작
-    [SerializeField]
-    private PlayerUIManager playerUIManager;
 
     private int soul = 0;
 
@@ -60,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            playerUIManager.activateSettingUI();
+            PlayerUIManager.instance.activateSettingUI();
         }
     }
 }

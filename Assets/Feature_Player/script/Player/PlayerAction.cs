@@ -9,9 +9,6 @@ public class PlayerAction : MonoBehaviour
     [SerializeField]
     private PlayerResource playerResource;
 
-    //플레이어 UI 조작
-    [SerializeField]
-    private PlayerUIManager playerUIManager;
 
     //플레이어 스테이터스 게임 플레이 도중에 받은 버프 or 스킬로 변경 가능함
 
@@ -60,7 +57,7 @@ public class PlayerAction : MonoBehaviour
         jumpForce = playerResource.jumpForce;
         attactSpeed = playerResource.attackSpeed;
         attackDamage = playerResource.attackDamage;
-        playerUIManager.InitHPUI(maxHP, currentHP);
+        PlayerUIManager.instance.InitHPUI(maxHP, currentHP);
     }
 
     void Update()
@@ -191,7 +188,7 @@ public class PlayerAction : MonoBehaviour
     public void TakeDamage(int amount, Vector2 targetPos)
     {
         currentHP -= amount;
-        playerUIManager.UpdateHPBar(currentHP);
+        PlayerUIManager.instance.UpdateHPBar(currentHP);
 
         if (currentHP < 0) currentHP = 0;
 
