@@ -4658,11 +4658,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2303778280348803576, guid: b65c51d4905791c47bf172aadab853c0, type: 3}
   m_PrefabInstance: {fileID: 1514631429}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1305858045 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4726203045622555229, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-  m_PrefabInstance: {fileID: 409477792017278994}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1316445736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6267,11 +6262,6 @@ Transform:
   - {fileID: 1381895920}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!223 &1852162842 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 4307786888614543491, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-  m_PrefabInstance: {fileID: 409477792017278994}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1858066080
 GameObject:
   m_ObjectHideFlags: 0
@@ -13220,18 +13210,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1408751891051096008, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1911218769611233986, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: m_Name
-      value: CheckPointUICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1911218769611233986, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2478801585116859854, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13272,29 +13250,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2779723042603448685, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: soulMenuUI
-      value: 
-      objectReference: {fileID: 1305858045}
-    - target: {fileID: 2779723042603448685, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: soulUICanvas
-      value: 
-      objectReference: {fileID: 1852162842}
-    - target: {fileID: 2779723042603448685, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: checkPointUICanvas
-      value: 
-      objectReference: {fileID: 1852162842}
-    - target: {fileID: 2882455821910948585, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2938620669005662966, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4702414394318655489, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5840256053450493599, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_AnchorMax.x
