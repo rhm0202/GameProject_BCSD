@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 
@@ -11,18 +12,20 @@ public class Boss_Stage1 : Enemy
     private int direction = 1;
     public new Boss1SM stateMachine;
 
-    [SerializeField] private float chasingSpeed = 5f;
-    [SerializeField] private float patrolSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
 
     [SerializeField] private GameObject attackHitbox;
+    [SerializeField] private GameObject shadowPrefab;     // 점프 공격 시 그림자
+    [SerializeField] private ParticleSystem dust;
 
     [HideInInspector] public bool isAttacking = false;
+    [HideInInspector] public bool isResting = false; // 공격 후 쉴 때 true
 
     public void StartBossFight()
     {
         player = FindAnyObjectByType<PlayerAction>().GetComponent<PlayerAction>();
         isFacingRight = false;
-        applyedSpeed = patrolSpeed;
+        applyedSpeed = moveSpeed;
     }
 
     public override void Chase()
@@ -61,7 +64,6 @@ public class Boss_Stage1 : Enemy
 
     public override void Patrol()
     {
-        applyedSpeed = patrolSpeed;
     }
 
     protected override void Awake()
@@ -74,6 +76,10 @@ public class Boss_Stage1 : Enemy
     {
         StartCoroutine(NAttackCoroutine());
     }
+    public void JumpAttack()
+    {
+        StartCoroutine(JAttackCoroutine());
+    }
 
     private IEnumerator NAttackCoroutine()
     {
@@ -81,7 +87,60 @@ public class Boss_Stage1 : Enemy
         attackHitbox.SetActive(true);
         yield return new WaitForSeconds(0.6f); // 공격 후 딜레이
         attackHitbox.SetActive(false);
-        stateMachine.TransitionTo(stateMachine.stateChasing);
+        isAttacking = false;
+    }
+
+    private IEnumerator JAttackCoroutine()
+    {
+        float shadowPosY = transform.position.y - 1;
+
+        ChangeAnimation("Attack");
+        ChangeAnimationSpeed(0.25f);
+        yield return new WaitForSeconds(0.95f);
+        rigid.linearVelocityY = 700f;
+        ChangeAnimationSpeed(1f);
+
+        while (true)
+        {
+            if (transform.position.y >= 500)
+            {
+                rigid.linearVelocityY = -10f;
+                break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        float playerPosX = player.transform.position.x;
+        transform.position = new Vector2(playerPosX, transform.position.y);
+
+        Vector2 shadowPos = new Vector2(playerPosX, shadowPosY);
+        GameObject shadow = Instantiate(shadowPrefab, shadowPos, Quaternion.identity);
+        
+
+        while (true)
+        {
+
+            if (transform.position.y - player.transform.position.y < 210)
+            {
+                ChangeAnimation("Attack");
+                Chase();
+                break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
+        while (true)
+        {
+            if (rigid.linearVelocityY >= 0)
+            {
+                Destroy(shadow);
+                dust.Play();
+                break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
     }
 
     private void Update()
@@ -91,7 +150,7 @@ public class Boss_Stage1 : Enemy
 
     private void FixedUpdate()
     {
-        if (!isAttacking)
+        if (!isAttacking && !isResting)
         {
             Move();
         }

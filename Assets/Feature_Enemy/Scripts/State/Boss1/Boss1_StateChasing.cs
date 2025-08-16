@@ -23,9 +23,8 @@ public class Boss1_StateChasing : IState
         timer += Time.deltaTime;
         if (timer > waitingTime)
         {
-            //int nextState = Random.Range(0, 2); // 0: Normal Attack, 1: Jump Attack
-            //boss1.stateMachine.TransitionTo(nextState == 0 ? boss1.stateMachine.stateNAttack : boss1.stateMachine.stateJAttack);
-            boss1.stateMachine.TransitionTo(boss1.stateMachine.stateNAttack);
+            int nextState = Random.Range(0, 2); // 0: Normal Attack, 1: Jump Attack
+            boss1.stateMachine.TransitionTo(nextState == 0 ? boss1.stateMachine.stateNAttack : boss1.stateMachine.stateJAttack);
         }
     }
 

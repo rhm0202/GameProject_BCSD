@@ -11,12 +11,12 @@ public class Boss1_StateReady : IState
 
     public void Enter()
     {
-        boss1.ChangeAnimation("Idle");
-        boss1.ChangeAnimationSpeed(0f);
     }
     public void Update()
     {
-        if(boss1.DetectPlayer())
+        boss1.ChangeAnimation("Idle");
+        boss1.ChangeAnimationSpeed(0f);
+        if (boss1.DetectPlayer())
         {
             boss1.stateMachine.TransitionTo(boss1.stateMachine.stateChasing);
         }

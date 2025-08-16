@@ -14,14 +14,17 @@ public class Boss1_StateNAttack : IState
     {
         boss1.ChangeAnimation("Attack");
         boss1.isAttacking = true;
+        boss1.NormalAttack();
     }
     public void Update()
     {
-        boss1.NormalAttack();
+        if (!boss1.isAttacking)
+        {
+            boss1.stateMachine.TransitionTo(boss1.stateMachine.stateRest);
+        }
     }
 
     public void Exit()
     {
-        boss1.isAttacking = false;
     }
 }

@@ -11,17 +11,19 @@ public class Boss1_StateJAttack : IState
 
     public void Enter()
     {
-        boss1.ChangeAnimation("Attack");
         boss1.isAttacking = true;
+        boss1.JumpAttack();
     }
     public void Update()
     {
-
+        if(!boss1.isAttacking)
+        {
+            boss1.stateMachine.TransitionTo(boss1.stateMachine.stateRest);
+        }
     }
 
     public void Exit()
     {
         boss1.isAttacking = false;
-        boss1.ChangeAnimation("Idle");
     }
 }
