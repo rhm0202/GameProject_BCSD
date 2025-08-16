@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.04, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -141,19 +141,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Salamander
   hp: 20
-  moveSpeed: 1
   detectionRange: 2.5
   attackRange: 0
-  enemyDamage: 0
+  enemyDamage: 5
   playerMask:
     serializedVersion: 2
     m_Bits: 128
   deadDelay: 2
   soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
   soulsDrop: 5
+  applyedSpeed: 0
   isChasingPlayer: 1
   player: {fileID: 0}
   chasingSpeed: 2
+  patrolSpeed: 1
 --- !u!70 &6310968107311102143
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1

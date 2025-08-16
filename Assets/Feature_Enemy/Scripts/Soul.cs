@@ -6,6 +6,7 @@ public class Soul : MonoBehaviour
     private Rigidbody2D rigid;
     private SpriteRenderer spriteRenderer;
 
+    [SerializeField] private int soulValue = 1; // 소울의 가치
     [SerializeField] private float minForce = 5f;
     [SerializeField] private float maxForce = 9f;
 
@@ -15,9 +16,8 @@ public class Soul : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (rigid != null)
         {
-            Debug.Log("Soul Rigidbody2D found, applying random force.");
             AddRandomForce(minForce, maxForce);
-            Invoke("StartBlinking", 4f);
+            Invoke("StartBlinking", 8f);
         }
     }
 
@@ -30,7 +30,7 @@ public class Soul : MonoBehaviour
     private void StartBlinking()
     {
         StartCoroutine(Blink());
-        Invoke("DestroySoul", 2.5f);
+        Invoke("DestroySoul", 3f);
     }
     private IEnumerator Blink()
     {
@@ -55,9 +55,12 @@ public class Soul : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.Soul += soulValue;
+            DestroySoul();
+        }
     }
 }

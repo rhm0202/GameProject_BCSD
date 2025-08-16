@@ -184,15 +184,9 @@ public class PlayerAction : MonoBehaviour
         isAttack = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("enemys"))
-        {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            TakeDamage(10, collision.transform.position); // 예시로 10의 데미지를 받음
-        }
-    }
 
+    // 피격 메서드
+    // targetPos: 적/투사체의 위치 (넉백 방향을 계산하기 위해 사용)
     public void TakeDamage(int amount, Vector2 targetPos)
     {
         currentHP -= amount;
