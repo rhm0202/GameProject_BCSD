@@ -11,8 +11,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject settingMenuUI;
 
-    [SerializeField]
-    private PlayerUIManager playerUI;
 
     [SerializeField]
     private Canvas checkPointUICanvas;
@@ -24,7 +22,7 @@ public class UIManager : MonoBehaviour
     //SettingUI에서 사용
     public void OnClickResume()
     {
-        playerUI.settingUIIsActive = false;
+        PlayerUIManager.instance.settingUIIsActive = false;
         pauseMenuUI.SetActive(false);
         settingUICanvas.gameObject.SetActive(false);
         Time.timeScale = 1f; // 게임 재개
