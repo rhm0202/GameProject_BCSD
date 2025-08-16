@@ -19,19 +19,28 @@ public class PlayerAction : MonoBehaviour
     public int maxHP;
     public int currentHP;
 
+    //플레이어 공격력
+    public float attackDamage = 5f;
+
+    //플레이어 방어력
+    public float defenseDamage = 0f;
+
     //플레이어 이동속도
-    public float speed;
+    public float speed = 5f;
 
     //플레이어 점프력
-    public float jumpForce;
+    public float jumpForce = 7f;
+
+    //플레이어 쿨다운
+    public float cooldown = 0f;
+
+    //플레이어 최대 소지 포션
+    public int maxPotion = 0;
 
     //플레이어 공격속도
     public float attactSpeed;
     [SerializeField] private float attacksuspendTime = 0.2f; // 공격 유지 시간
     [SerializeField] private float attackdelayTime;          // 공격 선 딜레이 시간
-
-    //플레이어 공격력
-    public float attackDamage;
 
     // 점프를 위한 바닥 체크
     public Transform groundCheck;
@@ -54,12 +63,15 @@ public class PlayerAction : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        maxHP = playerResource.maxHP;
+        maxHP = playerResource.FindMaxHP();
         currentHP = maxHP;
-        speed = playerResource.speed;
-        jumpForce = playerResource.jumpForce;
-        attactSpeed = playerResource.attackSpeed;
-        attackDamage = playerResource.attackDamage;
+        attackDamage = playerResource.FindAttackDamage();
+        defenseDamage = playerResource.FindDefenseDamage();
+        speed = playerResource.FindSpeed();
+        jumpForce = playerResource.FindJumpForce();
+        cooldown = playerResource.FindCoolDown();
+        maxPotion = playerResource.FindMaxPotion();
+
         playerUIManager.InitHPUI(maxHP, currentHP);
     }
 
@@ -79,7 +91,7 @@ public class PlayerAction : MonoBehaviour
 
             crouching();
 
-            Attack();
+            TryAttack();
         }
 
 
@@ -87,6 +99,8 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10, Vector2.zero);
+            maxHP = playerResource.UpMaxHp(1);
+            playerUIManager.InitHPUI(maxHP, currentHP);
         }
 
     }
@@ -154,29 +168,38 @@ public class PlayerAction : MonoBehaviour
     }
 
     // 공격
-    void Attack()
+    void TryAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttack)
+        if (Input.GetMouseButtonDown(0))
         {
-            animator.SetTrigger("IsAttact");
-            isAttack = true;
-            Invoke("EnableHitbox", attackdelayTime);
-            StartCoroutine(AttackCooldownCoroutine());
+            StartCoroutine(Attack());
         }
     }
+
+    IEnumerator Attack()
+    {
+        isAttack = true;
+        animator.SetTrigger("IsAttact");
+        Invoke("EnableHitbox", attackdelayTime);
+        yield return StartCoroutine(AttackCooldownCoroutine());
+    }
+
+    IEnumerator AttackCooldownCoroutine()
+    {
+        float spd = Mathf.Max(0.1f, attactSpeed);
+        yield return new WaitForSeconds(1f / spd);
+        isAttack = false;
+    }
+
     private void EnableHitbox()
     {
         attackHitbox.SetActive(true);
         Invoke("DisableHitbox", attacksuspendTime);
     }
+
     private void DisableHitbox()
     {
         attackHitbox.SetActive(false);
-    }
-    IEnumerator AttackCooldownCoroutine()
-    {
-        yield return new WaitForSeconds(1f / attactSpeed);
-        isAttack = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
