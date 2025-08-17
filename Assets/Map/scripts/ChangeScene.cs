@@ -6,16 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-
-    public GameObject player;
-    
-
-    void OnTriggerEnter2D(Collider2D collision)
+    public string currnetSceneName;
+    public string nextSceneName;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject == player)
+        if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Stage1-2");
+            SceneManager.LoadScene(nextSceneName, LoadSceneMode.Additive);
+
+            SceneManager.UnloadSceneAsync(currnetSceneName);
+           
         }
     }
+    
 
 }

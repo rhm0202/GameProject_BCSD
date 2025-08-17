@@ -4,6 +4,8 @@ using TMPro;
 
 public class PlayerUIManager : MonoBehaviour
 {
+    public static PlayerUIManager instance;
+
     [SerializeField]
     private Slider hpBar; // Inspector에서 연결할 HP 바
     [SerializeField]
@@ -18,7 +20,39 @@ public class PlayerUIManager : MonoBehaviour
     public int coin;
     public int soul;
 
-    private bool settingUIIsActive = false;
+    public bool settingUIIsActive = false;
+
+    #region Singleton Pattern
+    public static PlayerUIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindAnyObjectByType<PlayerUIManager>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("PlayerUIManager");
+                    instance = obj.AddComponent<PlayerUIManager>();
+                    DontDestroyOnLoad(obj);
+                }
+            }
+            return instance;
+        }
+    }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
 
     public void InitHPUI(int max, int current)
     {
@@ -46,15 +80,13 @@ public class PlayerUIManager : MonoBehaviour
             Time.timeScale = 0f;
             pauseMenuUI.SetActive(settingUIIsActive);
             settingUI.gameObject.SetActive(settingUIIsActive);
-            
         }
         else
         {
             settingUIIsActive = false;
             Time.timeScale = 1f;
             pauseMenuUI.SetActive(settingUIIsActive);
-            settingUI.gameObject.SetActive(settingUIIsActive);
-            
+            settingUI.gameObject.SetActive(settingUIIsActive);      
         }
         
     }

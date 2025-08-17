@@ -4,8 +4,10 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+
     private int soul = 0;
-    public int Soul     // ¿ÜºÎ¿¡¼­ ¼Ò¿ïÀ» ÂüÁ¶ÇÒ ¶§ »ç¿ëÇØÁÖ¼¼¿ä.
+
+    public int Soul     
     {
         get { return soul; }
         set
@@ -17,7 +19,7 @@ public class GameManager : MonoBehaviour
             }
             soul = value;
             Debug.Log("Soul changed: " + soul);
-            // ¿©±â¿¡ ¼Ò¿ïÀÌ º¯°æµÉ ¶§¸¶´Ù È£ÃâÇÒ ¸Ş¼­µå¸¦ Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+            // ì—¬ê¸°ì— ì†Œìš¸ì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ í˜¸ì¶œí•  ë©”ì„œë“œë¥¼ ì¶”ê°€í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
         }
     }
 
@@ -48,6 +50,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerUIManager.instance.activateSettingUI();
         }
     }
 }
