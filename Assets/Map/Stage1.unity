@@ -5773,9 +5773,21 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 924731391491603349, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 924731391491603349, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
       propertyPath: playerUIManager
       value: 
       objectReference: {fileID: 1533585891}
+    - target: {fileID: 924731391491603349, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
+      propertyPath: usePotionCooldown
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223656519093733021, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 409477792017278995}
     - target: {fileID: 7372181453046189838, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.293901
@@ -5819,32 +5831,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 371460323389611313, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1485739289}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
---- !u!1 &1485739288 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 371460323389611313, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
-  m_PrefabInstance: {fileID: 1485739287}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1485739289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485739288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54eeac412a7d21546a0f308ea1f7ffc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkpointLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  uiManager: {fileID: 409477792017278995}
 --- !u!4 &1508370172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2303778280348803576, guid: b65c51d4905791c47bf172aadab853c0, type: 3}

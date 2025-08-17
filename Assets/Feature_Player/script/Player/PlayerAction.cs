@@ -34,13 +34,21 @@ public class PlayerAction : MonoBehaviour
     //플레이어 쿨다운
     public float cooldown = 0f;
 
-    //플레이어 최대 소지 포션
+    //포션
     public int maxPotion = 0;
+    public int currentPotion = 0;
+    public int potionHeal = 30;
+
+    [SerializeField] 
+    private float usePotionCooldown = 10f;  // 다음 포션 사용까지 대기
+    private bool usePotionLocked = false;
 
     //플레이어 공격속도
     public float attactSpeed;
-    [SerializeField] private float attacksuspendTime = 0.2f; // 공격 유지 시간
-    [SerializeField] private float attackdelayTime;          // 공격 선 딜레이 시간
+    [SerializeField] 
+    private float attacksuspendTime = 0.2f; // 공격 유지 시간
+    [SerializeField] 
+    private float attackdelayTime;          // 공격 선 딜레이 시간
 
     // 점프를 위한 바닥 체크
     public Transform groundCheck;
@@ -48,7 +56,8 @@ public class PlayerAction : MonoBehaviour
 
     // 필요한 인스펙터..?
     private Rigidbody2D rb;
-    [SerializeField] private Animator animator;
+    [SerializeField] 
+    private Animator animator;
     private bool isGrounded;
 
     //플레이어 상태 확인
@@ -57,8 +66,24 @@ public class PlayerAction : MonoBehaviour
     private bool isCrouching = false;
     private bool isKnockbacking = false;    // 넉백 중인지 확인(넉백 중에는 다른 힘을 받지 않도록)
 
+    //대쉬
+    [SerializeField] 
+    private float dashSpeed = 14f;       // 대시 속도
+    [SerializeField] 
+    private float dashDuration = 0.15f;  // 유지 시간
+    [SerializeField] 
+    private float dashCooldown = 1f;  // 다음 대시까지 대기
+    [SerializeField] 
+    private float tiltAngle = 12f;       // 살짝 기울이기
+    [SerializeField] 
+    private GameObject dashImage;        // 대시 이펙트 오브젝트
+
+    private bool isDashing = false;
+    private bool dashLocked = false;
+
     // 플레이어 공격 판정 히트박스 오브젝트
-    [SerializeField] private GameObject attackHitbox;
+    [SerializeField] 
+    private GameObject attackHitbox;
 
     void Start()
     {
@@ -71,6 +96,7 @@ public class PlayerAction : MonoBehaviour
         jumpForce = playerResource.FindJumpForce();
         cooldown = playerResource.FindCoolDown();
         maxPotion = playerResource.FindMaxPotion();
+        currentPotion = maxPotion;
 
         playerUIManager.InitHPUI(maxHP, currentHP);
     }
@@ -92,6 +118,10 @@ public class PlayerAction : MonoBehaviour
             crouching();
 
             TryAttack();
+
+            Dash();
+
+            TryUsePotion();
         }
 
 
@@ -108,6 +138,8 @@ public class PlayerAction : MonoBehaviour
     // 좌우 움직임
     void Move(float moveInput)
     {
+        if (isDashing) return;
+
         float moveSpeed = speed;
         
         if (isCrouching) 
@@ -135,6 +167,8 @@ public class PlayerAction : MonoBehaviour
     // 점프
     void Jumpping()
     {
+        if (isDashing) return;
+
         Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         Debug.Log($"isGrounded: {isGrounded}");
 
@@ -170,7 +204,7 @@ public class PlayerAction : MonoBehaviour
     // 공격
     void TryAttack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isAttack)
         {
             StartCoroutine(Attack());
         }
@@ -189,6 +223,81 @@ public class PlayerAction : MonoBehaviour
         float spd = Mathf.Max(0.1f, attactSpeed);
         yield return new WaitForSeconds(1f / spd);
         isAttack = false;
+    }
+
+    //대쉬
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(!isDashing && !dashLocked)
+            {
+                StartCoroutine(DashRoutine());
+            }    
+        }
+    }
+
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        dashLocked = true;
+
+        int dir = (transform.localScale.x < 0f) ? 1 : -1;
+
+        float startZ = transform.eulerAngles.z;
+        float targetZ = startZ + (-dir * tiltAngle);
+        transform.rotation = Quaternion.Euler(0, 0, targetZ);
+        if (dashImage) dashImage.SetActive(true);
+
+        
+        float gBackup = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+
+        yield return new WaitForSeconds(dashDuration);
+
+        transform.rotation = Quaternion.Euler(0, 0, startZ);
+        rb.gravityScale = gBackup;
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        if (dashImage) dashImage.SetActive(false);
+
+        isDashing = false;
+        float realDashCooldown = Mathf.Max(0f, dashCooldown - (dashCooldown * cooldown));
+
+        yield return new WaitForSeconds(realDashCooldown);
+        dashLocked = false;
+    }
+
+    //포션 사용
+    void TryUsePotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(currentPotion > 0)
+            {
+                if (!usePotionLocked)
+                {
+                    StartCoroutine(UsePotion());
+                }
+            }
+            else
+            {
+                Debug.Log("포션의 개수가 부족합니다.");
+            }
+
+        }
+    }
+
+    IEnumerator UsePotion()
+    {
+        usePotionLocked = true;
+        Heal(potionHeal);
+        currentPotion--;
+
+        float realUsePotionCooldown = Mathf.Max(0f, usePotionCooldown - (usePotionCooldown * cooldown));
+        yield return new WaitForSeconds(realUsePotionCooldown);
+
+        usePotionLocked = false;
     }
 
     private void EnableHitbox()
@@ -211,13 +320,17 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount, Vector2 targetPos)
+    public void TakeDamage(float amount, Vector2 targetPos)
     {
-        currentHP -= amount;
-        playerUIManager.UpdateHPBar(currentHP);
+        float raw = amount - defenseDamage;
+        float dmg = Mathf.Max(0f, raw);
 
+        int damage = Mathf.CeilToInt(dmg);
+
+        currentHP -= damage;
         if (currentHP < 0) currentHP = 0;
 
+        playerUIManager.UpdateHPBar(currentHP);
         if (currentHP == 0)
         {
             GameOver();
@@ -244,6 +357,8 @@ public class PlayerAction : MonoBehaviour
     {
         currentHP += amount;
         if (currentHP > maxHP) currentHP = maxHP;
+
+        playerUIManager.InitHPUI(maxHP, currentHP);
     }
 
     void GameOver()
