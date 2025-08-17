@@ -5138,14 +5138,15 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 128
-  deadDelay: 1
+  deadDelay: 3
   soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
   soulsDrop: 235
   applyedSpeed: 0
   isChasingPlayer: 0
   player: {fileID: 0}
-  chasingSpeed: 5
-  patrolSpeed: 5
+  moveSpeed: 5
   attackHitbox: {fileID: 7733290067304801591}
+  shadowPrefab: {fileID: 0}
   dust: {fileID: 5801776561945609258}
   isAttacking: 0
+  isResting: 0

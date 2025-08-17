@@ -143,6 +143,12 @@ public class Boss_Stage1 : Enemy
         isAttacking = false;
     }
 
+    protected override void Dead()
+    {
+        base.Dead();
+        stateMachine.TransitionTo(stateMachine.stateDead);
+    }
+
     private void Update()
     {
         stateMachine.Update();
