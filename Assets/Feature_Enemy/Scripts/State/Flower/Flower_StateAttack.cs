@@ -13,10 +13,10 @@ public class Flower_StateAttack : IState
     {
         enemy.ChangeAnimation("Attack");
         enemy.isAttacking = true;
+        enemy.Attack();
     }
     public void Update()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Exit()

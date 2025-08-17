@@ -6,6 +6,8 @@ public class Enemy_Flower : Enemy
     private int direction = 1;
     public bool isAttacking = false;
 
+    public new FlowerSM stateMachine;
+
     [SerializeField] private float attackDelay = 1f;
 
     [SerializeField] private float inBattleSpeed;
@@ -42,6 +44,16 @@ public class Enemy_Flower : Enemy
         player = FindAnyObjectByType<PlayerAction>().GetComponent<PlayerAction>();
     }
 
+    public bool IsPlayerInRange()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+        return distanceToPlayer <= attackRange;
+    }
+
     public override void Move()
     {
         direction = isFacingRight ? 1 : -1;
@@ -74,9 +86,12 @@ public class Enemy_Flower : Enemy
         }
     }
 
-
     private void FixedUpdate()
     {
+        if (isAttacking)
+        {
+            return;
+        }
         Move();
     }
 }
