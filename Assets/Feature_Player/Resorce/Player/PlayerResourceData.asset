@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473470cc96d96544e8e8b9c3a2783ada, type: 3}
   m_Name: PlayerResourceData
   m_EditorClassIdentifier: 
-  maxHP: 50
-  currentHP: 50
+  maxHP: 59
+  attackDamage: 5
+  defenseDamage: 0
+  attackSpeed: 1
   speed: 12
   jumpForce: 35
-  attackSpeed: 1
-  attackDamage: 5
+  cooldown: 0.1
+  maxPotion: 2
