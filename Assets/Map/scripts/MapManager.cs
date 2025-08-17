@@ -1,16 +1,47 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class MapManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    private GameObject miniMap;
+    [SerializeField]
+    private GameObject largeMap;
+
+    public bool IsLargeMapOpen { get; private set; }
+
+    private void Awake()
     {
-        
+   
+        CloseLargeMap();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (UserInput.WasMapPressed)
+        {
+            if (!IsLargeMapOpen)
+            {
+                OpenLargeMap();
+            }
+            else
+            {
+                CloseLargeMap();
+            }
+        }
+    }
+
+    private void OpenLargeMap()
+    {
+        miniMap.SetActive(false);
+        largeMap.SetActive(true);
+        IsLargeMapOpen = true;
+    }
+    private void CloseLargeMap()
+    {
+        miniMap.SetActive(true );
+        largeMap.SetActive(false);
+        IsLargeMapOpen = false;
     }
 }
