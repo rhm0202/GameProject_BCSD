@@ -5,7 +5,7 @@ public class Enemy_Grounded : Enemy
 
     private int direction = 1;
     [SerializeField] private float chasingSpeed = 2f;
-    [SerializeField] protected float patrolSpeed = 1f;
+    [SerializeField] private float patrolSpeed = 1f;
 
 
     public override void Move()
@@ -62,13 +62,24 @@ public class Enemy_Grounded : Enemy
             Flip();
         }
     }
-
     private bool IsGroundAhead()
     {
         Vector2 frontPoint = new Vector2(rigid.position.x + (isFacingRight ? 0.5f : -0.5f), rigid.position.y);
         RaycastHit2D hit = Physics2D.Raycast(frontPoint, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
         return hit.collider != null;
+    }
+
+    protected override void Dead()
+    {
+        base.Dead();
+        stateMachine.TransitionTo(stateMachine.stateDead);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        stateMachine = new EnemySM(this);
     }
 
     void Update()

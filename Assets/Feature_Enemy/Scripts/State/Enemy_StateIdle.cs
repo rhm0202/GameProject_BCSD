@@ -16,7 +16,7 @@ public class Enemy_StateIdle : IState
 
     public void Update()
     {
-        if (enemy.DetectPlayer())
+        if (enemy.DetectPlayer() && enemy.isChasingPlayer)
         {
             enemy.stateMachine.TransitionTo(enemy.stateMachine.stateChasing);
         }

@@ -17,7 +17,7 @@ public class Soul : MonoBehaviour
         if (rigid != null)
         {
             AddRandomForce(minForce, maxForce);
-            Invoke("StartBlinking", 4f);
+            Invoke("StartBlinking", 8f);
         }
     }
 
@@ -30,7 +30,7 @@ public class Soul : MonoBehaviour
     private void StartBlinking()
     {
         StartCoroutine(Blink());
-        Invoke("DestroySoul", 2.5f);
+        Invoke("DestroySoul", 3f);
     }
     private IEnumerator Blink()
     {
