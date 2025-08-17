@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Boss1_StateReady : IState
 {
-    private Boss_Stage1 boss1;
+    private Boss boss1;
 
-    public Boss1_StateReady(Boss_Stage1 boss)
+    public Boss1_StateReady(Boss boss)
     {
         this.boss1 = boss;
     }

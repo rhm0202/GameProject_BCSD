@@ -17,22 +17,6 @@ public class Enemy_Flower : Enemy
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private Transform firePos;
 
-    private bool isGazingPlayer()
-    {
-        if (player == null)
-        {
-            return false;
-        }
-        if (isFacingRight && player.transform.position.x < transform.position.x)
-        {
-            return false;
-        }
-        else if (!isFacingRight && player.transform.position.x > transform.position.x)
-        {
-            return false;
-        }
-        return true;
-    }
 
     public override void Chase()
     {

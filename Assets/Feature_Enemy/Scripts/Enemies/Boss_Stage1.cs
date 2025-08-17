@@ -7,53 +7,24 @@ using static UnityEngine.GraphicsBuffer;
 // 스테이지 1의 보스
 // 배회하며 일정 시간마다 통상 공격
 // 플레이어의 위치로 점프 공격
-public class Boss_Stage1 : Enemy
+public class Boss_Stage1 : Boss
 {
     private int direction = 1;
     public new Boss1SM stateMachine;
 
     [SerializeField] private float moveSpeed = 5f;
 
-    [SerializeField] private GameObject attackHitbox;
-    [SerializeField] private GameObject shadowPrefab;     // 점프 공격 시 그림자
-    [SerializeField] private ParticleSystem dust;
+    [SerializeField] private GameObject shadowPrefab;       // 점프 공격 시 그림자
+    [SerializeField] private ParticleSystem dust;           // 점프 착지 시 이펙트
 
-    [HideInInspector] public bool isAttacking = false;
     [HideInInspector] public bool isResting = false; // 공격 후 쉴 때 true
 
-    public void StartBossFight()
+    public override void StartBossFight()
     {
-        player = FindAnyObjectByType<PlayerAction>().GetComponent<PlayerAction>();
-        isFacingRight = false;
+        base.StartBossFight();
         applyedSpeed = moveSpeed;
     }
 
-    public override void Chase()
-    {
-        if (player == null)
-        {
-            return;
-        }
-
-        if (isFacingRight && player.transform.position.x < transform.position.x)
-        {
-            Flip();
-        }
-        else if (!isFacingRight && player.transform.position.x > transform.position.x)
-        {
-            Flip();
-        }
-    }
-
-    public override bool DetectPlayer()
-    {
-        Collider2D target = Physics2D.OverlapCircle(transform.position, detectionRange, playerMask);
-        if(target != null)
-        {
-            return true;
-        }
-        return false;
-    }
 
 
     public override void Move()
@@ -62,9 +33,6 @@ public class Boss_Stage1 : Enemy
         rigid.linearVelocityX = applyedSpeed * direction;
     }
 
-    public override void Patrol()
-    {
-    }
 
     protected override void Awake()
     {
@@ -72,22 +40,9 @@ public class Boss_Stage1 : Enemy
         stateMachine = new Boss1SM(this);
     }
 
-    public void NormalAttack()
-    {
-        StartCoroutine(NAttackCoroutine());
-    }
     public void JumpAttack()
     {
         StartCoroutine(JAttackCoroutine());
-    }
-
-    private IEnumerator NAttackCoroutine()
-    {
-        yield return new WaitForSeconds(0.75f); // 공격 딜레이
-        attackHitbox.SetActive(true);
-        yield return new WaitForSeconds(0.6f); // 공격 후 딜레이
-        attackHitbox.SetActive(false);
-        isAttacking = false;
     }
 
     private IEnumerator JAttackCoroutine()
@@ -112,6 +67,7 @@ public class Boss_Stage1 : Enemy
         float playerPosX = player.transform.position.x;
         transform.position = new Vector2(playerPosX, transform.position.y);
 
+        // 그림자 생성
         Vector2 shadowPos = new Vector2(playerPosX, shadowPosY);
         GameObject shadow = Instantiate(shadowPrefab, shadowPos, Quaternion.identity);
         

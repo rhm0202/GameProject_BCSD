@@ -44,6 +44,22 @@ public abstract class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
+    protected bool isGazingPlayer()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+        if (isFacingRight && player.transform.position.x < transform.position.x)
+        {
+            return false;
+        }
+        else if (!isFacingRight && player.transform.position.x > transform.position.x)
+        {
+            return false;
+        }
+        return true;
+    }
     protected void Flip()
     {
         isFacingRight = !isFacingRight;
