@@ -6354,6 +6354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Grounded_JustPatrol
       objectReference: {fileID: 0}
+    - target: {fileID: 1603736403573982400, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2618915221983896905, guid: 61a3844cd9a23f54486bc0434f8bd0b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 159.54855

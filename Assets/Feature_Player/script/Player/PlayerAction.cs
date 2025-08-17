@@ -56,6 +56,7 @@ public class PlayerAction : MonoBehaviour
 
     // 필요한 인스펙터..?
     private Rigidbody2D rb;
+    private CapsuleCollider2D capsuleCollider;
     [SerializeField] 
     private Animator animator;
     private bool isGrounded;
@@ -68,7 +69,7 @@ public class PlayerAction : MonoBehaviour
 
     //대쉬
     [SerializeField] 
-    private float dashSpeed = 14f;       // 대시 속도
+    private float dashSpeed = 30f;       // 대시 속도
     [SerializeField] 
     private float dashDuration = 0.15f;  // 유지 시간
     [SerializeField] 
@@ -80,6 +81,7 @@ public class PlayerAction : MonoBehaviour
 
     private bool isDashing = false;
     private bool dashLocked = false;
+    public bool isInvincibleDash = false;
 
     // 플레이어 공격 판정 히트박스 오브젝트
     [SerializeField] 
@@ -88,6 +90,7 @@ public class PlayerAction : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        capsuleCollider = rb.GetComponent<CapsuleCollider2D>();
         maxHP = playerResource.FindMaxHP();
         currentHP = maxHP;
         attackDamage = playerResource.FindAttackDamage();
@@ -247,6 +250,13 @@ public class PlayerAction : MonoBehaviour
         isDashing = true;
         dashLocked = true;
 
+        if (isInvincibleDash)
+        {
+            int playerLayer = gameObject.layer;                    // 보통 "Player"
+            int enemyLayer = LayerMask.NameToLayer("Enemy");      // 네 프로젝트의 적 레이어 이름
+            Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+        }
+
         int dir = (transform.localScale.x < 0f) ? 1 : -1;
 
         float startZ = transform.eulerAngles.z;
@@ -257,7 +267,8 @@ public class PlayerAction : MonoBehaviour
         
         float gBackup = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+        float realDashSpeed = dashSpeed + speed;
+        rb.linearVelocity = new Vector2(dir * realDashSpeed, 0f);
 
         yield return new WaitForSeconds(dashDuration);
 
@@ -267,6 +278,13 @@ public class PlayerAction : MonoBehaviour
         if (dashImage) dashImage.SetActive(false);
 
         isDashing = false;
+        if (isInvincibleDash)
+        {
+            int playerLayer = gameObject.layer;
+            int enemyLayer = LayerMask.NameToLayer("Enemy");
+            Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        }
+
         float realDashCooldown = Mathf.Max(0f, dashCooldown - (dashCooldown * cooldown));
 
         yield return new WaitForSeconds(realDashCooldown);
@@ -324,6 +342,10 @@ public class PlayerAction : MonoBehaviour
 
     public void TakeDamage(int amount, Vector2 targetPos)
     {
+        if(isDashing && isInvincibleDash)
+        {
+            return;
+        }
         float raw = amount - defenseDamage;
         float dmg = Mathf.Max(0f, raw);
 
