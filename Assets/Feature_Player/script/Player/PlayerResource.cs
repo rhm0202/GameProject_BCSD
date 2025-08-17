@@ -103,7 +103,8 @@ public class PlayerResource : ScriptableObject
     }
     public float UpAttackSpeed(float value)
     {
-        attackSpeed += attackSpeed;
+        attackSpeed += attackSpeed*value;
+        Debug.Log($"{value}");
         return attackSpeed;
     }
     public float UpSpeed(float value)

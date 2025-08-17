@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
+    private SoulManager soulManager;
+
+    [SerializeField]
     private Canvas settingUICanvas;
     [SerializeField]
     private GameObject pauseMenuUI;
@@ -59,7 +62,7 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    //소울 창 관련
+    //메인 메뉴 관련
     public void OpenCheckPointUI() 
     {
         Time.timeScale = 0f;
@@ -67,6 +70,7 @@ public class UIManager : MonoBehaviour
         checkPointMenuUI.SetActive(true);
         soulMenuUI.SetActive(false);
         mainMenuUI.SetActive(true);
+        soulManager.UpdateSoulCount();
     }
     public void CloseCheckPointUI()
     {

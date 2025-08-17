@@ -92,11 +92,13 @@ public class PlayerAction : MonoBehaviour
         currentHP = maxHP;
         attackDamage = playerResource.FindAttackDamage();
         defenseDamage = playerResource.FindDefenseDamage();
+        attactSpeed = playerResource.FindAttackSpeed();
         speed = playerResource.FindSpeed();
         jumpForce = playerResource.FindJumpForce();
         cooldown = playerResource.FindCoolDown();
         maxPotion = playerResource.FindMaxPotion();
         currentPotion = maxPotion;
+        UpdatePotion();
 
         playerUIManager.InitHPUI(maxHP, currentHP);
     }
@@ -129,7 +131,6 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10, Vector2.zero);
-            maxHP = playerResource.UpMaxHp(1);
             playerUIManager.InitHPUI(maxHP, currentHP);
         }
 
@@ -230,6 +231,10 @@ public class PlayerAction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            if (isCrouching)
+            {
+                return;
+            }
             if(!isDashing && !dashLocked)
             {
                 StartCoroutine(DashRoutine());
@@ -294,10 +299,15 @@ public class PlayerAction : MonoBehaviour
         Heal(potionHeal);
         currentPotion--;
 
+        UpdatePotion();
         float realUsePotionCooldown = Mathf.Max(0f, usePotionCooldown - (usePotionCooldown * cooldown));
         yield return new WaitForSeconds(realUsePotionCooldown);
 
         usePotionLocked = false;
+    }
+    void UpdatePotion()
+    {
+        playerUIManager.potionText.text = "x" + currentPotion.ToString();
     }
 
     private void EnableHitbox()
