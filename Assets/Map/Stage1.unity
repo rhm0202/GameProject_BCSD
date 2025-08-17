@@ -5777,6 +5777,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 924731391491603349, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
+      propertyPath: defenseDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 924731391491603349, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
       propertyPath: playerUIManager
       value: 
       objectReference: {fileID: 1533585891}

@@ -331,6 +331,7 @@ public class PlayerAction : MonoBehaviour
         if (currentHP < 0) currentHP = 0;
 
         playerUIManager.UpdateHPBar(currentHP);
+
         if (currentHP == 0)
         {
             GameOver();
