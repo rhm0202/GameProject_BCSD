@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_StatePatrol
+public class Enemy_StatePatrol : IState
 {
     private Enemy enemy;
 
@@ -16,10 +16,14 @@ public class Enemy_StatePatrol
 
     public void Update()
     {
-        enemy.Move();
+        enemy.Patrol();
+        if (enemy.DetectPlayer())
+        {
+            enemy.stateMachine.TransitionTo(enemy.stateMachine.stateChasing);
+        }
     }
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 }

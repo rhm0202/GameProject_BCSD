@@ -1,0 +1,363 @@
+using UnityEngine;
+using System.Collections;
+using UnityEditor;
+using UnityEngine.SceneManagement;
+
+public class PlayerAction : MonoBehaviour
+{
+    //플레이어 정보 모음
+    [SerializeField]
+    private PlayerResource playerResource;
+
+    //플레이어 UI 조작
+    [SerializeField]
+    private PlayerUIManager playerUIManager;
+
+    //플레이어 스테이터스 게임 플레이 도중에 받은 버프 or 스킬로 변경 가능함
+
+    //플레이어 체력
+    public int maxHP;
+    public int currentHP;
+
+    //플레이어 공격력
+    public float attackDamage = 5f;
+
+    //플레이어 방어력
+    public float defenseDamage = 0f;
+
+    //플레이어 이동속도
+    public float speed = 5f;
+
+    //플레이어 점프력
+    public float jumpForce = 7f;
+
+    //플레이어 쿨다운
+    public float cooldown = 0f;
+
+    //포션
+    public int maxPotion = 0;
+    public int currentPotion = 0;
+    public int potionHeal = 30;
+
+    [SerializeField] 
+    private float usePotionCooldown = 10f;  // 다음 포션 사용까지 대기
+    private bool usePotionLocked = false;
+
+    //플레이어 공격속도
+    public float attactSpeed;
+    [SerializeField] 
+    private float attacksuspendTime = 0.2f; // 공격 유지 시간
+    [SerializeField] 
+    private float attackdelayTime;          // 공격 선 딜레이 시간
+
+    // 점프를 위한 바닥 체크
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+
+    // 필요한 인스펙터..?
+    private Rigidbody2D rb;
+    [SerializeField] 
+    private Animator animator;
+    private bool isGrounded;
+
+    //플레이어 상태 확인
+    private bool isAttack = false;
+    private float lastAttackTime = 0f;
+    private bool isCrouching = false;
+    private bool isKnockbacking = false;    // 넉백 중인지 확인(넉백 중에는 다른 힘을 받지 않도록)
+
+    //대쉬
+    [SerializeField] 
+    private float dashSpeed = 14f;       // 대시 속도
+    [SerializeField] 
+    private float dashDuration = 0.15f;  // 유지 시간
+    [SerializeField] 
+    private float dashCooldown = 1f;  // 다음 대시까지 대기
+    [SerializeField] 
+    private float tiltAngle = 12f;       // 살짝 기울이기
+    [SerializeField] 
+    private GameObject dashImage;        // 대시 이펙트 오브젝트
+
+    private bool isDashing = false;
+    private bool dashLocked = false;
+
+    // 플레이어 공격 판정 히트박스 오브젝트
+    [SerializeField] 
+    private GameObject attackHitbox;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        maxHP = playerResource.FindMaxHP();
+        currentHP = maxHP;
+        attackDamage = playerResource.FindAttackDamage();
+        defenseDamage = playerResource.FindDefenseDamage();
+        speed = playerResource.FindSpeed();
+        jumpForce = playerResource.FindJumpForce();
+        cooldown = playerResource.FindCoolDown();
+        maxPotion = playerResource.FindMaxPotion();
+        currentPotion = maxPotion;
+
+        playerUIManager.InitHPUI(maxHP, currentHP);
+    }
+
+    void Update()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        //TrackIdleTime(stateInfo);
+
+        float moveInput = Input.GetAxisRaw("Horizontal");
+
+        if (!isKnockbacking)
+        {
+            Move(moveInput);
+
+            Jumpping();
+
+            crouching();
+
+            TryAttack();
+
+            Dash();
+
+            TryUsePotion();
+        }
+
+
+        //데미지 피해 테스트
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(10, Vector2.zero);
+            maxHP = playerResource.UpMaxHp(1);
+            playerUIManager.InitHPUI(maxHP, currentHP);
+        }
+
+    }
+
+    // 좌우 움직임
+    void Move(float moveInput)
+    {
+        if (isDashing) return;
+
+        float moveSpeed = speed;
+        
+        if (isCrouching) 
+        {
+            moveSpeed *= 0.3f;
+        }
+
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        animator.SetBool("IsMoving", true);
+        
+
+        if (moveInput == 0)
+        {
+            animator.SetBool("IsMoving", false);
+        }
+        if (moveInput != 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (moveInput > 0 ? -1 : 1);
+            transform.localScale = scale;
+        }
+    }
+
+    // 점프
+    void Jumpping()
+    {
+        if (isDashing) return;
+
+        Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        Debug.Log($"isGrounded: {isGrounded}");
+
+        // 기본 상태
+        isGrounded = false;
+
+        if (hit != null)
+        {
+            isGrounded = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            Debug.Log("뛰는 중");
+        }
+        else
+        {
+            Debug.Log("뛰는 중 아님");
+        }
+
+        animator.SetBool("IsJumping", !isGrounded);
+    }
+
+    // 앉기
+    void crouching()
+    {
+        //앉기 관련 로직
+        isCrouching = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        animator.SetBool("IsCrouching", isCrouching);
+    }
+
+    // 공격
+    void TryAttack()
+    {
+        if (Input.GetMouseButtonDown(0) && !isAttack)
+        {
+            StartCoroutine(Attack());
+        }
+    }
+
+    IEnumerator Attack()
+    {
+        isAttack = true;
+        animator.SetTrigger("IsAttact");
+        Invoke("EnableHitbox", attackdelayTime);
+        yield return StartCoroutine(AttackCooldownCoroutine());
+    }
+
+    IEnumerator AttackCooldownCoroutine()
+    {
+        float spd = Mathf.Max(0.1f, attactSpeed);
+        yield return new WaitForSeconds(1f / spd);
+        isAttack = false;
+    }
+
+    //대쉬
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(!isDashing && !dashLocked)
+            {
+                StartCoroutine(DashRoutine());
+            }    
+        }
+    }
+
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        dashLocked = true;
+
+        int dir = (transform.localScale.x < 0f) ? 1 : -1;
+
+        float startZ = transform.eulerAngles.z;
+        float targetZ = startZ + (-dir * tiltAngle);
+        transform.rotation = Quaternion.Euler(0, 0, targetZ);
+        if (dashImage) dashImage.SetActive(true);
+
+        
+        float gBackup = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+
+        yield return new WaitForSeconds(dashDuration);
+
+        transform.rotation = Quaternion.Euler(0, 0, startZ);
+        rb.gravityScale = gBackup;
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        if (dashImage) dashImage.SetActive(false);
+
+        isDashing = false;
+        float realDashCooldown = Mathf.Max(0f, dashCooldown - (dashCooldown * cooldown));
+
+        yield return new WaitForSeconds(realDashCooldown);
+        dashLocked = false;
+    }
+
+    //포션 사용
+    void TryUsePotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(currentPotion > 0)
+            {
+                if (!usePotionLocked)
+                {
+                    StartCoroutine(UsePotion());
+                }
+            }
+            else
+            {
+                Debug.Log("포션의 개수가 부족합니다.");
+            }
+
+        }
+    }
+
+    IEnumerator UsePotion()
+    {
+        usePotionLocked = true;
+        Heal(potionHeal);
+        currentPotion--;
+
+        float realUsePotionCooldown = Mathf.Max(0f, usePotionCooldown - (usePotionCooldown * cooldown));
+        yield return new WaitForSeconds(realUsePotionCooldown);
+
+        usePotionLocked = false;
+    }
+
+    private void EnableHitbox()
+    {
+        attackHitbox.SetActive(true);
+        Invoke("DisableHitbox", attacksuspendTime);
+    }
+
+    private void DisableHitbox()
+    {
+        attackHitbox.SetActive(false);
+    }
+
+
+    public void TakeDamage(int amount, Vector2 targetPos)
+    {
+        float raw = amount - defenseDamage;
+        float dmg = Mathf.Max(0f, raw);
+
+        int damage = Mathf.CeilToInt(dmg);
+
+        currentHP -= damage;
+        if (currentHP < 0) currentHP = 0;
+
+        playerUIManager.UpdateHPBar(currentHP);
+
+        if (currentHP == 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            Debug.Log($"Player took {amount} damage. Current HP: {currentHP}");
+            int direction = (transform.position.x < targetPos.x) ? 1 : -1;
+            Knockback(direction);
+        }
+    }
+    private void Knockback(int direction)
+    {
+        isKnockbacking = true;
+        rb.AddForce(new Vector2(direction * 25, 7), ForceMode2D.Impulse);
+        Invoke("ResetKnockback", 0.3f);
+    }
+    private void ResetKnockback()
+    {
+        isKnockbacking = false;
+    }
+
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        if (currentHP > maxHP) currentHP = maxHP;
+
+        playerUIManager.InitHPUI(maxHP, currentHP);
+    }
+
+    void GameOver()
+    {
+        currentHP = maxHP;
+        SceneManager.LoadScene("GameOver");
+    }
+
+}

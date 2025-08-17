@@ -15,10 +15,10 @@ TagManager:
   - UI
   - Ground
   - Player
+  - CheckPoint
   - 
-  - Map
   - 
-  - 
+  - Soul
   - 
   - 
   - 
@@ -42,6 +42,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Soul
+    uniqueID: 1034238125
     locked: 0
   m_RenderingLayers:
   - Default
