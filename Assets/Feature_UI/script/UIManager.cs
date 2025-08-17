@@ -64,7 +64,8 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         checkPointUICanvas.gameObject.SetActive(true);
-       checkPointMenuUI.SetActive(true);
+        checkPointMenuUI.SetActive(true);
+        soulMenuUI.SetActive(false);
         mainMenuUI.SetActive(true);
     }
     public void CloseCheckPointUI()

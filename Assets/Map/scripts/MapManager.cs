@@ -17,20 +17,20 @@ public class MapManager : MonoBehaviour
         CloseLargeMap();
     }
 
-    private void Update()
-    {
-        if (UserInput.WasMapPressed)
-        {
-            if (!IsLargeMapOpen)
-            {
-                OpenLargeMap();
-            }
-            else
-            {
-                CloseLargeMap();
-            }
-        }
-    }
+    //private void Update()
+    //{
+    //    if (UserInput.WasMapPressed)
+    //    {
+    //        if (!IsLargeMapOpen)
+    //        {
+    //            OpenLargeMap();
+    //        }
+    //        else
+    //        {
+    //            CloseLargeMap();
+    //        }
+    //    }
+    //}
 
     private void OpenLargeMap()
     {
