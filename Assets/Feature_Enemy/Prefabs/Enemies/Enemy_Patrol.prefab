@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6310968107311102143}
   - component: {fileID: 8472929252355912642}
   m_Layer: 0
-  m_Name: Enemy_Grounded
+  m_Name: Enemy_Patrol
   m_TagString: enemys
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
   soulsDrop: 5
   applyedSpeed: 0
-  isChasingPlayer: 1
+  isChasingPlayer: 0
   player: {fileID: 0}
   chasingSpeed: 2
   patrolSpeed: 1
