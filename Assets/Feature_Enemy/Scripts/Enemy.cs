@@ -12,6 +12,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected int enemyDamage;
     public int EnemyDamage { get { return enemyDamage; } }
+    public float AttackRange { get { return attackRange; } }
+    public float DetectionRange { get { return detectionRange; } }
 
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] private float deadDelay = 1f;

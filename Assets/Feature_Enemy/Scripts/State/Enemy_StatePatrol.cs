@@ -17,7 +17,7 @@ public class Enemy_StatePatrol : IState
     public void Update()
     {
         enemy.Patrol();
-        if (enemy.DetectPlayer())
+        if (enemy.DetectPlayer() && enemy.isChasingPlayer)
         {
             enemy.stateMachine.TransitionTo(enemy.stateMachine.stateChasing);
         }

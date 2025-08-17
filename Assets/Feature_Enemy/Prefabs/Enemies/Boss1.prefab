@@ -4940,7 +4940,7 @@ GameObject:
   - component: {fileID: -5986011068018436850}
   - component: {fileID: 96293509407630685}
   - component: {fileID: 4117855431736235539}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Boss1
   m_TagString: enemys
   m_Icon: {fileID: 0}

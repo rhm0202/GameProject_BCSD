@@ -17,11 +17,15 @@ public class Flower_StateAttack : IState
     }
     public void Update()
     {
+        if (!enemy.isAttacking)
+        {
+            enemy.stateMachine.TransitionTo(enemy.stateMachine.stateBattle);
+        }
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+
     }
 
 }

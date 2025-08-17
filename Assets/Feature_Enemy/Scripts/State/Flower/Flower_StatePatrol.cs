@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class Flower_StateIdle : IState
+public class Flower_StatePatrol : IState
 {
     private Enemy_Flower enemy;
 
     float timer = 0f;
     int waitingTime;
-
-    public Flower_StateIdle(Enemy_Flower enemy)
+    public Flower_StatePatrol(Enemy_Flower enemy)
     {
         this.enemy = enemy;
     }
@@ -15,20 +14,20 @@ public class Flower_StateIdle : IState
     public void Enter()
     {
         timer = 0f;
-        waitingTime = Random.Range(1, 3);
-        enemy.ChangeAnimation("Idle");
+        waitingTime = Random.Range(2, 5);
+        enemy.ChangeAnimation("Walk");
         enemy.player = null;
-        enemy.applyedSpeed = 0f;
     }
 
     public void Update()
     {
         if (!enemy.DetectPlayer())
         {
+            enemy.Patrol();
             timer += Time.deltaTime;
             if (timer >= waitingTime)
             {
-                enemy.stateMachine.TransitionTo(enemy.stateMachine.statePatrol);
+                enemy.stateMachine.TransitionTo(enemy.stateMachine.stateIdle);
             }
         }
         else

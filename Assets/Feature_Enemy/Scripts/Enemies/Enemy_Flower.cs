@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -8,20 +9,44 @@ public class Enemy_Flower : Enemy
 
     public new FlowerSM stateMachine;
 
-    [SerializeField] private float attackDelay = 1f;
+    [SerializeField] private float attackDelay = 5f;
 
     [SerializeField] private float inBattleSpeed;
     [SerializeField] private float patrolSpeed = 1f;
 
     [SerializeField] private GameObject ProjectilePrefab;
+    [SerializeField] private Transform firePos;
 
-    public override void Chase()
+    private bool isGazingPlayer()
     {
         if (player == null)
         {
-            return;
+            return false;
         }
+        if (isFacingRight && player.transform.position.x < transform.position.x)
+        {
+            return false;
+        }
+        else if (!isFacingRight && player.transform.position.x > transform.position.x)
+        {
+            return false;
+        }
+        return true;
+    }
 
+    public override void Chase()
+    {
+        if (!isGazingPlayer())
+        {
+            Flip();
+        }
+    }
+    public void Away()
+    {
+        if(isGazingPlayer())
+        {
+            Flip();
+        }
     }
 
     public override bool DetectPlayer()
@@ -42,16 +67,17 @@ public class Enemy_Flower : Enemy
     public void EnterBattle()
     {
         player = FindAnyObjectByType<PlayerAction>().GetComponent<PlayerAction>();
+        applyedSpeed = inBattleSpeed;
     }
 
-    public bool IsPlayerInRange()
+    public float DistanceToPlayer()
     {
         if (player == null)
         {
-            return false;
+            return -1f;
         }
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        return distanceToPlayer <= attackRange;
+        return distanceToPlayer;
     }
 
     public override void Move()
@@ -76,14 +102,49 @@ public class Enemy_Flower : Enemy
         return hit.collider != null;
     }
 
+    GameObject projectile;
     public void Attack()
+    {
+        if (projectile != null)
+        {
+            isAttacking = false;
+            return;
+        }
+        if (!isGazingPlayer())
+        {
+            Flip();
+        }
+        StartCoroutine(AttackCoroutine());
+    }
+
+    private IEnumerator AttackCoroutine()
     {
         if (player != null)
         {
-            GameObject projectile = Instantiate(ProjectilePrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.75f); // °ø°Ý µô·¹ÀÌ
+            projectile = Instantiate(ProjectilePrefab, firePos.position, Quaternion.identity);
             Vector2 direction = player.transform.position - transform.position;
             projectile.GetComponent<Projectile>().Initialize(transform.position, direction);
         }
+        yield return new WaitForSeconds(attackDelay);
+        isAttacking = false;
+    }
+
+    protected override void Dead()
+    {
+        base.Dead();
+        stateMachine.TransitionTo(stateMachine.stateDead);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        stateMachine = new FlowerSM(this);
+    }
+
+    private void Update()
+    {
+        stateMachine.Update();
     }
 
     private void FixedUpdate()
