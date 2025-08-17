@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject checkPointMenuUI;
     [SerializeField]
+    private GameObject mainMenuUI;
+    [SerializeField]
     private GameObject soulMenuUI;
 
     //SettingUI에서 사용
@@ -59,11 +61,17 @@ public class UIManager : MonoBehaviour
 
     //소울 창 관련
     public void OpenCheckPointUI() 
-    { 
-       checkPointUICanvas.gameObject.SetActive(true); 
+    {
+        Time.timeScale = 0f;
+        checkPointUICanvas.gameObject.SetActive(true);
+       checkPointMenuUI.SetActive(true);
+        mainMenuUI.SetActive(true);
     }
     public void CloseCheckPointUI()
     {
+        Time.timeScale = 1f;
+        mainMenuUI.SetActive(false);
+        checkPointMenuUI.SetActive(false);
         checkPointUICanvas.gameObject.SetActive(false);
     }
 }
