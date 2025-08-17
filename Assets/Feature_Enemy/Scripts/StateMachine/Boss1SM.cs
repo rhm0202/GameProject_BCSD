@@ -19,5 +19,6 @@ public class Boss1SM : EnemySM
         stateRest = new Boss1_StateRest(enemy);
 
         CurrentState = stateReady; // 초기 상태 설정
+        CurrentState.Enter();
     }
 }
