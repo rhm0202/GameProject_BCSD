@@ -51,7 +51,7 @@ public class SoulManager : MonoBehaviour
     private void Start()
     {
         //GameManager.Instance.Soul += 500;
-        skillPointMax = new int[18] {5,5,1,5,5,1,5,5,5,5,1,5,5,5,5,3,5,5};
+        skillPointMax = new int[18] {5,5,1,5,5,1,5,5,5,5,1,5,5,1,5,3,5,5};
         skillPointCount = new int[18];
         UpdateSoulCount();
         UpdateStatusMaxHP();
@@ -539,7 +539,32 @@ public class SoulManager : MonoBehaviour
             Debug.Log("이미 최대치인 스킬입니다.");
         }
     }
+    public void skill14()
+    {
+        skillNumber = 13;
 
+        if (skillPointMax[skillNumber] > skillPointCount[skillNumber])
+        {
+            bool haveSoul = UseSoul(30);
+
+            if (!haveSoul)
+            {
+                return;
+            }
+
+            if (skillPointCount[skillNumber] == 0)
+            {
+                skillimages[skillNumber].color = new Color(255, 255, 255, 255);
+            }
+            skillPointCount[skillNumber]++;
+            skillPointCountText[skillNumber].text = $"{skillPointCount[skillNumber]}";
+            playerAction.isInvincibleDash = true;
+        }
+        else if (skillPointMax[skillNumber] <= skillPointCount[skillNumber])
+        {
+            Debug.Log("이미 최대치인 스킬입니다.");
+        }
+    }
     public void skill16()
     {
         skillNumber = 15;
