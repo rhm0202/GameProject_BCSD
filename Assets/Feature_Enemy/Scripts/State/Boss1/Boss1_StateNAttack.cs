@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class Boss1_StateNAttack : IState
 {
-    private Boss boss1;
+    private Boss boss;
 
     public Boss1_StateNAttack(Boss boss)
     {
-        this.boss1 = boss;
+        this.boss = boss;
     }
 
     public void Enter()
     {
-        boss1.ChangeAnimation("Attack");
-        boss1.isAttacking = true;
-        boss1.NormalAttack();
+        boss.ChangeAnimation("Attack");
+        boss.isAttacking = true;
+        boss.NormalAttack();
     }
     public void Update()
     {
-        if (!boss1.isAttacking)
+        if (!boss.isAttacking)
         {
-            boss1.stateMachine.TransitionTo(boss1.stateMachine.stateRest);
+            boss.stateMachine.TransitionTo(boss.stateMachine.stateRest);
         }
     }
 

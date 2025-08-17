@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
+    [HideInInspector] public bool isResting = false; // 공격 후 쉴 때 true
     [HideInInspector] public bool isAttacking = false;
 
     [SerializeField] protected float NAttackDelay = 0.75f; // 통상 공격 딜레이
