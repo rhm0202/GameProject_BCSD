@@ -35,18 +35,13 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
-    {
-        audioSource.volume = 0.3f;
-    }
     public void PlaySound(AudioClip clip)
     {
-        if(!audioSource.isPlaying) {
-            if (clip == null) return;
-            audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.clip = clip;
-            audioSource.Play();
-            Destroy(audioSource, clip.length); // 클립이 끝나면 오디오 소스 제거
-        }
+        if (clip == null) return;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.volume = 0.3f;
+        audioSource.Play();
+        Destroy(audioSource, clip.length); // 클립이 끝나면 오디오 소스 제거
     }
 }
