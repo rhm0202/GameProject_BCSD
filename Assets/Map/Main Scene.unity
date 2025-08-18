@@ -314,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1911218769611233986, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2478801585116859854, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -356,6 +356,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2779723042603448685, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
+      propertyPath: playerUIManager
+      value: 
+      objectReference: {fileID: 1080063660}
     - target: {fileID: 2938620669005662966, guid: bb3df9efe3e56e341bc0dc9d6691201c, type: 3}
       propertyPath: m_Name
       value: UI
@@ -727139,6 +727143,10 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 578204863}
+    - target: {fileID: 5491819834446446393, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7372181453046189838, guid: 4749ee4e327ccd9489e18c78c3b8e811, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

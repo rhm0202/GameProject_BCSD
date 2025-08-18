@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private SoulManager soulManager;
 
+
     [SerializeField]
     private Canvas settingUICanvas;
     [SerializeField]
