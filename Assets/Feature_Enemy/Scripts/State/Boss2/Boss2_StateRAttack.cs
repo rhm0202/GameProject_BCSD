@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class Boss1_StateNAttack : IState
+public class Boss2_StateRAttack : IState
 {
-    private Boss_Stage1 boss;
-
-    public Boss1_StateNAttack(Boss_Stage1 boss)
+    private Boss_Stage2 boss;
+    public Boss2_StateRAttack(Boss_Stage2 boss)
     {
         this.boss = boss;
     }
 
     public void Enter()
     {
-        boss.ChangeAnimation("Attack");
         boss.isAttacking = true;
-        boss.NormalAttack();
+        boss.applyedSpeed = 0f;
+        boss.RangedAttack();
     }
+
     public void Update()
     {
         if (!boss.isAttacking)
@@ -25,5 +25,8 @@ public class Boss1_StateNAttack : IState
 
     public void Exit()
     {
+        boss.restTime = 2f;
+        boss.isAttacking = false;
     }
+
 }

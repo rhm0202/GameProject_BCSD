@@ -12,6 +12,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected int enemyDamage;
     public int EnemyDamage { get { return enemyDamage; } }
+    public float AttackRange { get { return attackRange; } }
+    public float DetectionRange { get { return detectionRange; } }
 
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] private float deadDelay = 1f;
@@ -42,6 +44,22 @@ public abstract class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
+    protected bool isGazingPlayer()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+        if (isFacingRight && player.transform.position.x < transform.position.x)
+        {
+            return false;
+        }
+        else if (!isFacingRight && player.transform.position.x > transform.position.x)
+        {
+            return false;
+        }
+        return true;
+    }
     protected void Flip()
     {
         isFacingRight = !isFacingRight;

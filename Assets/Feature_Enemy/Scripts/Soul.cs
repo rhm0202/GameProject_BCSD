@@ -12,8 +12,8 @@ public class Soul : MonoBehaviour
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigid = GetComponentInParent<Rigidbody2D>();
+        spriteRenderer = GetComponentInParent<SpriteRenderer>();
         if (rigid != null)
         {
             AddRandomForce(minForce, maxForce);
@@ -52,10 +52,11 @@ public class Soul : MonoBehaviour
 
     private void DestroySoul()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {

@@ -1,10 +1,10 @@
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Flower_StateBattle : IState
 {
     private Enemy_Flower enemy;
 
-    float timer = 0f;
 
     public Flower_StateBattle(Enemy_Flower enemy)
     {
@@ -14,18 +14,33 @@ public class Flower_StateBattle : IState
     public void Enter()
     {
         enemy.EnterBattle();
-        timer = 0f;
         enemy.ChangeAnimation("Walk");
+        enemy.ChangeAnimationSpeed(1.5f);
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        if(enemy.DistanceToPlayer() > enemy.DetectionRange)
+        {
+            enemy.stateMachine.TransitionTo(enemy.stateMachine.statePatrol);
+        }
+        if (enemy.DistanceToPlayer() > enemy.AttackRange)
+        {
+            enemy.Chase();
+        }
+        else if (enemy.DistanceToPlayer() < 12f)
+        {
+            enemy.Away();
+        }
+        else
+        {
+            enemy.stateMachine.TransitionTo(enemy.stateMachine.stateAttack);
+        }
     }
 
     public void Exit()
     {
-        enemy.player = null;
+        enemy.ChangeAnimationSpeed(1f);
     }
 
 }
