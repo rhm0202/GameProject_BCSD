@@ -12,11 +12,15 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected int enemyDamage;
     public int EnemyDamage { get { return enemyDamage; } }
+    public float AttackRange { get { return attackRange; } }
+    public float DetectionRange { get { return detectionRange; } }
 
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] private float deadDelay = 1f;
     [SerializeField] private GameObject soulPrefab; // 소울 프리팹
     [SerializeField] protected int soulsDrop;   // 적 처치 시 드랍되는 소울의 양
+
+    [SerializeField] private AudioClip hitSound;
 
     public float applyedSpeed;
 
@@ -42,6 +46,22 @@ public abstract class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
+    protected bool isGazingPlayer()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+        if (isFacingRight && player.transform.position.x < transform.position.x)
+        {
+            return false;
+        }
+        else if (!isFacingRight && player.transform.position.x > transform.position.x)
+        {
+            return false;
+        }
+        return true;
+    }
     protected void Flip()
     {
         isFacingRight = !isFacingRight;
@@ -65,6 +85,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         hp -= damage;
+        SoundManager.instance.PlaySound(hitSound); // 적이 데미지를 받았을 때 소리 재생
         if (hp <= 0)
         {
             Dead();

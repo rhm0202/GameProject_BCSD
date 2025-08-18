@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 8201236523799221471}
   - component: {fileID: 6310968107311102143}
   - component: {fileID: 8472929252355912642}
-  m_Layer: 10
+  
+  m_Layer: 12
   m_Name: Enemy_Patrol
   m_TagString: enemys
   m_Icon: {fileID: 0}
@@ -150,8 +151,9 @@ MonoBehaviour:
   deadDelay: 2
   soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
   soulsDrop: 5
+  hitSound: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
   applyedSpeed: 0
-  isChasingPlayer: 0
+  isChasingPlayer: 1
   player: {fileID: 0}
   chasingSpeed: 2
   patrolSpeed: 1

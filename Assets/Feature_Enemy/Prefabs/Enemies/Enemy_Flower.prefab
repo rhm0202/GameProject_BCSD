@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &311580181897649977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874782164141633144}
+  m_Layer: 12
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874782164141633144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311580181897649977}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1329943464546512372}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1298466025773203127
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,9 +46,9 @@ GameObject:
   - component: {fileID: 386194387801735449}
   - component: {fileID: 8727035138421295868}
   - component: {fileID: 2306770367509131158}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_Flower
-  m_TagString: Untagged
+  m_TagString: enemys
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +65,8 @@ Transform:
   m_LocalPosition: {x: 394.66592, y: 2.5080237, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1874782164141633144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7315533730168921962
@@ -205,8 +237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Flower
   hp: 20
-  detectionRange: 10
-  attackRange: 5
+  detectionRange: 25
+  attackRange: 15
   enemyDamage: 8
   playerMask:
     serializedVersion: 2
@@ -214,9 +246,13 @@ MonoBehaviour:
   deadDelay: 1
   soulPrefab: {fileID: 8350187094848667073, guid: 2919ebc2137d256499da6a8ad53109d6, type: 3}
   soulsDrop: 6
+  hitSound: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
   applyedSpeed: 0
   isChasingPlayer: 0
   player: {fileID: 0}
-  inBattleSpeed: 3
-  patrolSpeed: 1
+  isAttacking: 0
+  attackDelay: 1
+  inBattleSpeed: 5
+  patrolSpeed: 3
   ProjectilePrefab: {fileID: 765458718982766280, guid: 7df1c81d54429254e901e71c7f91f368, type: 3}
+  firePos: {fileID: 1874782164141633144}
