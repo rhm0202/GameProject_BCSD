@@ -20,6 +20,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private GameObject soulPrefab; // 소울 프리팹
     [SerializeField] protected int soulsDrop;   // 적 처치 시 드랍되는 소울의 양
 
+    [SerializeField] private AudioClip hitSound;
+
     public float applyedSpeed;
 
     public bool isChasingPlayer = false;
@@ -83,6 +85,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         hp -= damage;
+        SoundManager.instance.PlaySound(hitSound); // 적이 데미지를 받았을 때 소리 재생
         if (hp <= 0)
         {
             Dead();
