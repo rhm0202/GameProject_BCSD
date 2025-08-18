@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7762654900204302623}
   - component: {fileID: 1248644912315099186}
   - component: {fileID: 1859379625537391172}
+  - component: {fileID: 7687680120171526406}
   m_Layer: 0
   m_Name: FlowerProjectile
   m_TagString: enemys
@@ -125,3 +126,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 6.1199994, y: 6.1499996}
   m_Direction: 0
+--- !u!114 &7687680120171526406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765458718982766280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2f350d4c392f94687d343f76f88777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  maxDistance: 20
+  damage: 6

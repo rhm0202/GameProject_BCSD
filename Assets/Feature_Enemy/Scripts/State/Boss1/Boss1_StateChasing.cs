@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Boss1_StateChasing : IState
 {
-    Boss_Stage1 boss1;
+    private Boss_Stage1 boss1;
 
     float timer;
     int waitingTime;

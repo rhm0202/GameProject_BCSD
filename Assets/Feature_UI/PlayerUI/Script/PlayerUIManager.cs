@@ -14,11 +14,14 @@ public class PlayerUIManager : MonoBehaviour
     private Canvas settingUI;
     [SerializeField]
     public GameObject pauseMenuUI;
+    [SerializeField]
+    private TMP_Text soulText;
+    [SerializeField]
+    public TMP_Text potionText;
 
     public int maxHP;
     public int currentHP;
     public int coin;
-    public int soul;
 
     public bool settingUIIsActive = false;
 
@@ -89,5 +92,10 @@ public class PlayerUIManager : MonoBehaviour
             settingUI.gameObject.SetActive(settingUIIsActive);      
         }
         
+    }
+
+    public void UpdateSoul()
+    {
+        soulText.text = $"{GameManager.Instance.Soul}";
     }
 }

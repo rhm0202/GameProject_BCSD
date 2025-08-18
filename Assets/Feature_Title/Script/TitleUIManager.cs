@@ -9,7 +9,7 @@ public class TitleUIManager : MonoBehaviour
 
     public void OnClickNewGame()
     {
-        SceneManager.LoadScene("stage1");
+        SceneManager.LoadScene("Main Scene");
     }
     public void OnClickLoadGame()
     {
