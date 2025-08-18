@@ -7,7 +7,7 @@ public class Boss1SM : EnemySM
     public Boss1_StateJAttack stateJAttack;
     public Boss1_StateChasing stateBattle;
     public Boss1_StateReady stateReady;
-    public new Boss1_StateRest stateRest;
+    public Boss1_StateRest stateRest;
 
     public Boss1SM(Boss_Stage1 enemy) : base(enemy)
     {

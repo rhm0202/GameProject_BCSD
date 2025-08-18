@@ -15,8 +15,6 @@ public class EnemySM
     public Enemy_StateChasing stateChasing;
     public Enemy_StatePatrol statePatrol;
     public Enemy_StateDead stateDead;
-    public Enemy_StateRest stateRest;
-    public Enemy_StateBattle stateBattle;
 
     public EnemySM(Enemy enemy)
     {
@@ -24,8 +22,6 @@ public class EnemySM
         stateChasing = new Enemy_StateChasing(enemy);
         statePatrol = new Enemy_StatePatrol(enemy);
         stateDead = new Enemy_StateDead(enemy);
-        stateRest = new Enemy_StateRest(enemy);
-        stateBattle = new Enemy_StateBattle(enemy);
         CurrentState = stateIdle;
     }
 

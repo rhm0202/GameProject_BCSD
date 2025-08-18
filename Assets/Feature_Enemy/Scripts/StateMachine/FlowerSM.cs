@@ -3,7 +3,7 @@ using UnityEngine;
 public class FlowerSM : EnemySM
 {
     public Flower_StateAttack stateAttack;
-    public Flower_StateBattle stateBattle;
+    public new Flower_StateBattle stateBattle;
     public new Flower_StateIdle stateIdle;
     public new Flower_StatePatrol statePatrol;
 

@@ -11,6 +11,7 @@ public class Boss : Enemy
 
     [SerializeField] protected GameObject attackHitbox;
 
+
     public override void Chase()
     {
         if (player == null)
@@ -54,14 +55,7 @@ public class Boss : Enemy
 
     public void NormalAttack()
     {
-        StartCoroutine(NAttackCoroutine());
+        StartCoroutine("NAttackCoroutine");
     }
-    private IEnumerator NAttackCoroutine()
-    {
-        yield return new WaitForSeconds(NAttackDelay); // 공격 딜레이
-        attackHitbox.SetActive(true);
-        yield return new WaitForSeconds(NAttackRecoveryDelay); // 공격 후 딜레이
-        attackHitbox.SetActive(false);
-        isAttacking = false;
-    }
+
 }

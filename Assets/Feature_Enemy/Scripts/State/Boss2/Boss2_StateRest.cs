@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class Boss1_StateRest : IState
+public class Boss2_StateRest : IState
 {
-    private Boss_Stage1 boss;
+    private Boss_Stage2 boss;
 
     float timer;
-    int waitingTime = 3;
-    public Boss1_StateRest(Boss_Stage1 boss)
+    float waitingTime = 1;
+    public Boss2_StateRest(Boss_Stage2 boss)
     {
         this.boss = boss;
     }
@@ -14,9 +14,10 @@ public class Boss1_StateRest : IState
     public void Enter()
     {
         boss.ChangeAnimation("Idle");
-        boss.ChangeAnimationSpeed(0.75f);
+        boss.ChangeAnimationSpeed(0.55f);
         boss.isResting = true;
         timer = 0f;
+        waitingTime = boss.restTime;
     }
 
     public void Update()

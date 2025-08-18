@@ -17,7 +17,6 @@ public class Boss_Stage1 : Boss
     [SerializeField] private GameObject shadowPrefab;       // 점프 공격 시 그림자
     [SerializeField] private ParticleSystem dust;           // 점프 착지 시 이펙트
 
-    [HideInInspector] public bool isResting = false; // 공격 후 쉴 때 true
 
     public override void StartBossFight()
     {
@@ -25,26 +24,31 @@ public class Boss_Stage1 : Boss
         applyedSpeed = moveSpeed;
     }
 
-
-
     public override void Move()
     {
         direction = isFacingRight ? 1 : -1;
         rigid.linearVelocityX = applyedSpeed * direction;
     }
 
-
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new Boss1SM(this);
+        Debug.Log("Boss_Stage1 Awake" + stateMachine);
     }
 
     public void JumpAttack()
     {
         StartCoroutine(JAttackCoroutine());
     }
-
+    private IEnumerator NAttackCoroutine()
+    {
+        yield return new WaitForSeconds(NAttackDelay);
+        attackHitbox.SetActive(true);
+        yield return new WaitForSeconds(NAttackRecoveryDelay);
+        attackHitbox.SetActive(false);
+        isAttacking = false;
+    }
     private IEnumerator JAttackCoroutine()
     {
         float shadowPosY = transform.position.y - 1;
@@ -107,6 +111,7 @@ public class Boss_Stage1 : Boss
 
     private void Update()
     {
+        Debug.Log("Boss_Stage1 Update" + stateMachine);
         stateMachine.Update();
     }
 

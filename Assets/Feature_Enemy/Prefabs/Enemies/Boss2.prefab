@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1103272266495146242
 Transform:
   m_ObjectHideFlags: 0
@@ -107,9 +107,9 @@ GameObject:
   - component: {fileID: 7672104800455317182}
   - component: {fileID: 8472838531226255440}
   - component: {fileID: 6988019815806850296}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Boss2
-  m_TagString: Untagged
+  m_TagString: enemys
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Boss2
   hp: 63
-  detectionRange: 40
+  detectionRange: 50
   attackRange: 0
   enemyDamage: 20
   playerMask:
@@ -310,7 +310,18 @@ MonoBehaviour:
   applyedSpeed: 0
   isChasingPlayer: 0
   player: {fileID: 0}
+  isResting: 0
   isAttacking: 0
-  NAttackDelay: 0.75
-  NAttackRecoveryDelay: 0.6
+  NAttackDelay: 0.4
+  NAttackRecoveryDelay: 0.4
   attackHitbox: {fileID: 5573144973685005385}
+  RAttackPosRange: 15
+  approachRange: 9
+  RAttackMoveSpeed: 5
+  approachSpeed: 9.5
+  burstDelay: 0.7
+  burstCount: 3
+  projectileSpread: 25
+  projectilePrefab: {fileID: 8841855613880940888, guid: 03b4a1ad6e601fc4ca1e901b44ff1dd8, type: 3}
+  restTime: 2
+  isMoving: 0

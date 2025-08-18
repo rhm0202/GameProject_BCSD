@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Boss1_StateReady : IState
+public class Boss2_StateReady : IState
 {
-    private Boss_Stage1 boss;
+    private Boss_Stage2 boss;
 
-    public Boss1_StateReady(Boss_Stage1 boss)
+    public Boss2_StateReady(Boss_Stage2 boss)
     {
         this.boss = boss;
     }
@@ -16,8 +16,6 @@ public class Boss1_StateReady : IState
     }
     public void Update()
     {
-
-        Debug.Log(boss.stateMachine);
         if (boss.DetectPlayer())
         {
             boss.stateMachine.TransitionTo(boss.stateMachine.stateBattle);
