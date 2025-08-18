@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-
     private int soul = 0;
 
     public int Soul     
@@ -18,6 +17,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
             soul = value;
+            PlayerUIManager.instance.UpdateSoul();
             Debug.Log("Soul changed: " + soul);
             // 여기에 소울이 변경될 때마다 호출할 메서드를 추가할 수 있습니다.
         }
