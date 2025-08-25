@@ -37,12 +37,12 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.volume = 0.3f;
     }
     public void PlaySound(AudioClip clip)
     {
         if (clip == null) return;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = 0.3f;
         audioSource.clip = clip;
         audioSource.Play();
         Destroy(audioSource, clip.length); // 클립이 끝나면 오디오 소스 제거

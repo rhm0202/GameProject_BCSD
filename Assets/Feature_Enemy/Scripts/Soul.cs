@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Soul : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Soul : MonoBehaviour
     [SerializeField] private int soulValue = 1; // 소울의 가치
     [SerializeField] private float minForce = 5f;
     [SerializeField] private float maxForce = 9f;
+    public IObjectPool<Soul> Pool { get; set; }
 
     void Start()
     {
@@ -52,7 +54,7 @@ public class Soul : MonoBehaviour
 
     private void DestroySoul()
     {
-        Destroy(transform.parent.gameObject);
+        Pool.Release(this);
     }
 
 

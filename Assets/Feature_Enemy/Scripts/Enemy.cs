@@ -85,7 +85,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         hp -= damage;
-        SoundManager.instance.PlaySound(hitSound); // 적이 데미지를 받았을 때 소리 재생
+        SoundManager.Instance.PlaySound(hitSound); // 적이 데미지를 받았을 때 소리 재생
         if (hp <= 0)
         {
             Dead();
@@ -110,7 +110,8 @@ public abstract class Enemy : MonoBehaviour
     {
         for (int i = 0; i < soulsDrop; i++)
         {
-            GameObject soul = Instantiate(soulPrefab, transform.position, Quaternion.identity);
+            var soul = SoulPoolManager.Instance.ObjectPool.Get();
+            soul.transform.position = transform.position;
         }
     }
 }
