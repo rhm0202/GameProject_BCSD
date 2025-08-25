@@ -60,7 +60,7 @@ public class SoulPoolManager : MonoBehaviour
     private Soul CreateSoul()
     {
         GameObject soulInstance = Instantiate(soulPrefab);
-        Soul soul = soulInstance.GetComponentInChildren<Soul>();
+        Soul soul = soulInstance.GetComponent<Soul>();
         soul.Pool = ObjectPool;
         return soul;
     }
@@ -68,11 +68,14 @@ public class SoulPoolManager : MonoBehaviour
     private void OnTakeFromPool(Soul soul)
     {
         soul.gameObject.SetActive(true);
+        Debug.Log("Soul Taken From Pool");
+        soul.Init();
     }
 
     private void OnReturnedToPool(Soul soul)
     {
         soul.gameObject.SetActive(false);
+        Debug.Log("Soul Returned To Pool");
     }
 
     private void OnDestroyPool(Soul soul)

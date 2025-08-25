@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6609612420789964473}
   - component: {fileID: 7294401298061616944}
   - component: {fileID: 5176448065447262611}
+  - component: {fileID: 2302278775202788307}
   m_Layer: 11
   m_Name: Soul
   m_TagString: Untagged
@@ -151,7 +152,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -163,6 +164,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2302278775202788307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8350187094848667073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad36cec49102784586b284f202b55d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soulValue: 1
+  minForce: 7.5
+  maxForce: 11
 --- !u!1 &9193204552861745443
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4124110589844623921}
   - component: {fileID: 2910415899924440702}
-  - component: {fileID: 4870853962854049721}
+  - component: {fileID: 8211532530995575086}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -242,7 +258,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.29982063, y: 0.47490475}
   m_EdgeRadius: 0
---- !u!114 &4870853962854049721
+--- !u!114 &8211532530995575086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,9 +267,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9193204552861745443}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ad36cec49102784586b284f202b55d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fcc96a38a568a546ab92bb7c96cfaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulValue: 1
-  minForce: 7.5
-  maxForce: 11

@@ -93,8 +93,8 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Dead()
     {
-        Destroy(gameObject, deadDelay);
         DropSoul();     // 처치시 소울 드랍
+        Destroy(gameObject, deadDelay);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
